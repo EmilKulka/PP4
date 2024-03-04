@@ -18,4 +18,17 @@ public class CreditCardTest {
                 BigDecimal.valueOf(1000),
                 card.getBalance());
     }
+
+    @Test
+    void itDenyCreditLimitBellowThreshold() {
+        CreditCard card = new CreditCard();
+
+        try {
+            card.assignCredit(BigDecimal.valueOf(50));
+            fail("Exception should be raised");
+
+        } catch (CreditBelowTresholdException e) {
+            assertTrue(true);
+        }
+    }
 }
