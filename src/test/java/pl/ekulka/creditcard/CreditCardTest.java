@@ -31,4 +31,34 @@ public class CreditCardTest {
             assertTrue(true);
         }
     }
+
+    @Test
+    void itCantAssignLimitTwice() {
+        CreditCard card = new CreditCard();
+
+        try {
+            card.assignCredit(BigDecimal.valueOf(100));
+            card.assignCredit(BigDecimal.valueOf(100));
+            fail("Exception should be raised");
+        } catch (ReasignLimitException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    void itAllowsToWithdraw() {
+        CreditCard card = new CreditCard();
+        card.assignCredit(BigDecimal.valueOf(1000));
+        card.withdraw(BigDecimal.valueOf(100));
+        assertEquals(BigDecimal.valueOf(900),card.getBalance());
+    }
+
+    @Test
+    void itCantWithdrawOverTheLimit() {
+        CreditCard card = new CreditCard();
+
+    }
+
+
+
 }
