@@ -23,26 +23,18 @@ public class CreditCardTest {
     void itDenyCreditLimitBellowThreshold() {
         CreditCard card = new CreditCard();
 
-        try {
-            card.assignCredit(BigDecimal.valueOf(50));
-            fail("Exception should be raised");
-
-        } catch (CreditBelowTresholdException e) {
-            assertTrue(true);
-        }
+        assertThrows(
+                CreditBelowTresholdException.class,
+                () -> card.assignCredit(BigDecimal.valueOf(50)));
     }
-
     @Test
     void itCantAssignLimitTwice() {
         CreditCard card = new CreditCard();
 
-        try {
-            card.assignCredit(BigDecimal.valueOf(100));
-            card.assignCredit(BigDecimal.valueOf(100));
-            fail("Exception should be raised");
-        } catch (ReasignLimitException e) {
-            assertTrue(true);
-        }
+        card.assignCredit(BigDecimal.valueOf(100));
+
+        assertThrows(ReasignLimitException.class,
+                () -> card.assignCredit(BigDecimal.valueOf(100)));
     }
 
     @Test
@@ -56,6 +48,11 @@ public class CreditCardTest {
     @Test
     void itCantWithdrawOverTheLimit() {
         CreditCard card = new CreditCard();
+
+        card.assignCredit(BigDecimal.valueOf(1000));
+
+        assertThrows(WithdrawOverLimitExcepton.class,
+                () -> card.withdraw(BigDecimal.valueOf(1001)));
 
     }
 

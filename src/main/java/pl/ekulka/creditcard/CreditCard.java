@@ -14,6 +14,10 @@ public class CreditCard {
         return creditLimit.compareTo(BigDecimal.valueOf(100)) < 0;
     }
 
+    private boolean isWithdrawOverLimit(BigDecimal value) {
+        return balance.compareTo(value) < 0;
+    }
+
     public void assignCredit(BigDecimal creditLimit) {
         if(isCreditCardAlreadyAssigned()) {
             throw new ReasignLimitException();
@@ -32,6 +36,9 @@ public class CreditCard {
     }
 
     public void withdraw(BigDecimal value) {
+        if(isWithdrawOverLimit(value)) {
+            throw new WithdrawOverLimitExcepton();
+        }
         balance = balance.subtract(value);
     }
 }
