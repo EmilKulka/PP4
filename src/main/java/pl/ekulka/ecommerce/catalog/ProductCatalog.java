@@ -1,8 +1,7 @@
 package pl.ekulka.ecommerce.catalog;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.*;
 
 public class ProductCatalog {
     private ArrayList<Product> products;
@@ -12,14 +11,29 @@ public class ProductCatalog {
     }
 
     public List<Product> allProducts() {
-        return new ArrayList<>();
+        return Collections.unmodifiableList(products);
     }
 
-    public void addProduct(String name, String description) {
+    public String addProduct(String name, String description) {
         UUID id = UUID.randomUUID();
 
         Product newProduct = new Product(id, name, description);
 
         products.add(newProduct);
+
+        return id.toString();
     }
+
+    public Product getProductBy(String id) {
+        return products.stream()
+                .filter(product -> product.getId().equals(id))
+                .findFirst()
+                .get();
+    }
+
+    public void changePrice(String id, BigDecimal price) {
+        Product loadedProduct = getProductBy(id);
+        loadedProduct.changePrice(price);
+    }
+
 }
