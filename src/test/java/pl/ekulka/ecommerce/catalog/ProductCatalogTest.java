@@ -21,4 +21,16 @@ public class ProductCatalogTest {
     private ProductCatalog thereIsProductCatalog() {
         return new ProductCatalog();
     }
+
+    @Test
+    void itAllowsToAddProduct() {
+        ProductCatalog catalog = thereIsProductCatalog();
+
+        catalog.addProduct("Legoset 8083", "nice one");
+
+        List<Product> allProducts = catalog.allProducts();
+
+        assertThat(allProducts)
+                .hasSize(1);
+    }
 }
