@@ -13,7 +13,7 @@ public class ArrayListProductStorage {
     }
 
     public List<Product> allProducts() {
-        return Collections.unmodifiableList(products);
+        return products;
     }
 
     public Product getProductBy(String id) {

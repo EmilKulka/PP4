@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -15,7 +16,7 @@ public class HashMapProductStorageTest {
 
         ProductStorage hasMapStorage = thereIsExampleHashMapStorage();
 
-        hasMapStorage.add(product);
+        hasMapStorage.addProduct(product);
 
         List<Product> products = hasMapStorage.allProducts();
         assertThat(products)
@@ -28,11 +29,11 @@ public class HashMapProductStorageTest {
     }
 
     private ProductStorage thereIsExampleHashMapStorage() {
-        return new HashMap<,Product>();
+        return new HashMapProductStorage();
     }
 
     private Product thereIsExampleProduct() {
-        return new Product(1,"test-it","a");
+        return new Product(UUID.randomUUID(), "test", "test");
     }
 
     @Test
