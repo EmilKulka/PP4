@@ -3,6 +3,7 @@ package pl.ekulka.ecommerce;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import pl.ekulka.ecommerce.catalog.ArrayListProductStorage;
 import pl.ekulka.ecommerce.catalog.ProductCatalog;
 
 @SpringBootApplication
@@ -14,7 +15,7 @@ public class App {
 
     @Bean
     ProductCatalog createMyProductCatalog() {
-        ProductCatalog productCatalog = new ProductCatalog();
+        ProductCatalog productCatalog = new ProductCatalog(new ArrayListProductStorage());
         productCatalog.addProduct("Lego set 1", "nice one");
         return productCatalog;
     }
