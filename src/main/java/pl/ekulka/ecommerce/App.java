@@ -17,6 +17,7 @@ public class App {
     ProductCatalog createMyProductCatalog() {
         ProductCatalog productCatalog = new ProductCatalog(new ArrayListProductStorage());
         productCatalog.addProduct("Lego set 1", "nice one");
+
         return productCatalog;
     }
 }
