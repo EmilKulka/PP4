@@ -33,7 +33,7 @@ public class HashMapProductStorageTest {
     }
 
     private Product thereIsExampleProduct() {
-        return new Product(UUID.randomUUID(), "test", "test");
+        return new Product(UUID.randomUUID(), "test-it", "test");
     }
 
     @Test
