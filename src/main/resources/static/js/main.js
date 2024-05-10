@@ -3,6 +3,11 @@ getProducts = () => {
     .then(response => response.json());
 }
 
+getCurrentOffer = () => {
+    return fetch("/api/current-offer")
+        .then(response => response.json());
+}
+
 createProductHtmlEl = (productData) => {
     const template = `
         <div>

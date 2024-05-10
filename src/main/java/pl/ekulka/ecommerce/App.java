@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.ekulka.ecommerce.catalog.ArrayListProductStorage;
 import pl.ekulka.ecommerce.catalog.ProductCatalog;
+import pl.ekulka.ecommerce.sales.SalesFacade;
 
 @SpringBootApplication
 public class App {
@@ -21,5 +22,10 @@ public class App {
         productCatalog.addProduct("Lego set 3", "nice one");
 
         return productCatalog;
+    }
+
+    @Bean
+    SalesFacade createSales(){
+        return new SalesFacade();
     }
 }
