@@ -33,8 +33,11 @@ public class SalesHttpTest {
 
     @Test
     void itAllowToAcceptOffer() {
+        //ARRANGE
         String productId = thereIsExampleProduct("Example Product", BigDecimal.valueOf(10.10));
 
+        //ACT
+        //add product to cart
         String addProductURL = String.format("http://localhost:%s/%s/%s",
                 port,
                 "api/cart/add=to-cart/",
@@ -42,6 +45,7 @@ public class SalesHttpTest {
 
         ResponseEntity<Object> addProductResponse = http.postForEntity(addProductURL, null, Object.class);
 
+        //accept offer
         String acceptOfferUrl = String.format("http://localhost:%s/%s", port, "api/accept-offer");
         AcceptOfferRequest acceptOfferRequest = new AcceptOfferRequest();
         acceptOfferRequest
@@ -49,12 +53,16 @@ public class SalesHttpTest {
                 .setFirstName("Emil")
                 .setLastName("Kulka");
 
-        ResponseEntity<ReservationDetail> reservationDetailResponseEntity = http.postForEntity(acceptOfferUrl, acceptOfferUrl, ReservationDetail.class);
+        ResponseEntity<ReservationDetail> reservationDetailResponseEntity = http.postForEntity(acceptOfferUrl, null, ReservationDetail.class);
+
+        //Arrange
+        //-> reservationWithIdExists
+        //->thereIsPaymentURLAvailable
 
         assertEquals(reservationDetailResponseEntity.getStatusCode(), HttpStatus.OK);
         assertNotNull(reservationDetailResponseEntity.getBody().getReservationId());
         assertNotNull(reservationDetailResponseEntity.getBody().getPaymentUrl());
-        assertEquals(BigDecimal.valueOf(10.10), );
+        assertEquals(BigDecimal.valueOf(10.10), reservationDetailResponseEntity.getBody().getTotal());
     }
 
 
