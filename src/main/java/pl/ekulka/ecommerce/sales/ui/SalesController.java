@@ -1,9 +1,13 @@
-package pl.ekulka.ecommerce.sales;
+package pl.ekulka.ecommerce.sales.ui;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.ekulka.ecommerce.sales.SalesFacade;
+import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
+import pl.ekulka.ecommerce.sales.offer.Offer;
+import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 
 @RestController
 public class SalesController {

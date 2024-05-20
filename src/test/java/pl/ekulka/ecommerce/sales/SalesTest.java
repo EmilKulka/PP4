@@ -1,5 +1,7 @@
 package pl.ekulka.ecommerce.sales;
 import org.junit.jupiter.api.Test;
+import pl.ekulka.ecommerce.sales.offer.Offer;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 

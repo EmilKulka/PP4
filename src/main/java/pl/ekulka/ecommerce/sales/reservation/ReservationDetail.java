@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.sales;
+package pl.ekulka.ecommerce.sales.reservation;
 
 import java.math.BigDecimal;
 
