@@ -4,12 +4,17 @@ import pl.ekulka.ecommerce.sales.cart.Cart;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.Offer;
+import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 
 public class SalesFacade {
     private InMemoryCartStorage cartStorage;
+    private OfferCalculator offerCalculator;
 
-
+    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator) {
+        this.cartStorage = cartStorage;
+        this.offerCalculator = offerCalculator;
+    }
 
     public Offer getCurrentOffer(String customerId) {
         Cart cart = loadCartForCustomer(customerId);
