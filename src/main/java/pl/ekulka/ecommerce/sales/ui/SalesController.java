@@ -14,7 +14,6 @@ public class SalesController {
     SalesFacade sales;
 
     public SalesController(SalesFacade sales) {
-
         this.sales = sales;
     }
 
