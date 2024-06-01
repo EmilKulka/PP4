@@ -30,7 +30,7 @@ public class SalesFacade {
     public Offer getCurrentOffer(String customerId) {
         Cart cart = loadCartForCustomer(customerId);
 
-        Offer currentOffer = offerCalculator.calculate(cart.getLines());
+        Offer currentOffer = offerCalculator.calculateOffer(cart.getLines());
 
         return currentOffer;
     }

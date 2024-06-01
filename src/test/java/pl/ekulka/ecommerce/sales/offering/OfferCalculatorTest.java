@@ -14,7 +14,7 @@ public class OfferCalculatorTest {
     void zeroOfferForEmptyItems() {
         OfferCalculator offerCalculator = new OfferCalculator();
 
-        Offer offer = offerCalculator.calculate(Collections.emptyList());
+        Offer offer = offerCalculator.calculateOffer(Collections.emptyList());
 
         assertThat(offer.getTotal()).isEqualTo(BigDecimal.ZERO);
     }
