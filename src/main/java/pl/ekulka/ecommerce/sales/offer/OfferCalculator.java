@@ -1,15 +1,21 @@
 package pl.ekulka.ecommerce.sales.offer;
 
-import pl.ekulka.ecommerce.catalog.Product;
-import pl.ekulka.ecommerce.catalog.ProductCatalog;
+
+
 import pl.ekulka.ecommerce.sales.cart.CartLine;
+import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
+import pl.ekulka.ecommerce.sales.productdetails.ProductDetailsProvider;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OfferCalculator {
-    ProductCatalog productCatalog;
+    ProductDetailsProvider productDetailsProvider;
+
+    public OfferCalculator(ProductDetailsProvider productDetailsProvider) {
+        this.productDetailsProvider = productDetailsProvider;
+    }
 
     public Offer calculateOffer(List<CartLine> cartLines) {
         List<OfferLine> offerLines = new ArrayList<>();
@@ -22,14 +28,14 @@ public class OfferCalculator {
     }
 
     public OfferLine toOfferLine(CartLine cartLine) {
-        Product product = productCatalog.getProductBy(cartLine.getProductId());
+        ProductDetails productDetails = productDetailsProvider.load(cartLine.getProductId()).get();
 
-        BigDecimal lineTotal = product.getPrice().multiply(BigDecimal.valueOf(cartLine.getQuantity()));
+        BigDecimal lineTotal = productDetails.getPrice().multiply(BigDecimal.valueOf(cartLine.getQuantity()));
 
         return new OfferLine(
                 cartLine.getProductId(),
-                product.getName(),
-                product.getPrice(),
+                productDetails.getName(),
+                productDetails.getPrice(),
                 cartLine.getQuantity(),
                 lineTotal);
     }

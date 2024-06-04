@@ -6,9 +6,12 @@ import pl.ekulka.ecommerce.sales.SalesFacade;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
+import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
+import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -16,11 +19,15 @@ public class OfferAcceptanceTest {
 
     private SpyPaymentGateway spyPaymentGateway;
     private ReservationRepository reservationRepository;
+    private InMemoryProductDetailsProvider productDetails;
+    private InMemoryCartStorage cartStorage;
 
     @BeforeEach
     void setUp() {
         spyPaymentGateway = new SpyPaymentGateway();
         reservationRepository = new ReservationRepository();
+        productDetails = new InMemoryProductDetailsProvider();
+        cartStorage = new InMemoryCartStorage();
     }
 
     @Test
@@ -29,8 +36,9 @@ public class OfferAcceptanceTest {
         String customerId = thereIsCustomer("Emil");
         String productId = ThereIsProduct("X", BigDecimal.valueOf(10));
 
-        sales.addToCart(customerId,productId);
-        sales.addToCart(customerId,productId);
+
+        sales.addToCart(customerId, productId);
+        sales.addToCart(customerId, productId);
 
         var acceptOfferRequest = new AcceptOfferRequest();
         acceptOfferRequest
@@ -40,8 +48,10 @@ public class OfferAcceptanceTest {
 
         ReservationDetail reservationDetails = sales.acceptOffer(customerId, acceptOfferRequest);
 
+
         assertThat(reservationDetails.getPaymentUrl()).isNotBlank();
         assertThat(reservationDetails.getReservationId()).isNotBlank();
+
 
         assertPaymentHasBeenRegistered();
         assertThereIsReservationWithId(reservationDetails.getReservationId());
@@ -52,8 +62,8 @@ public class OfferAcceptanceTest {
     }
 
     private void assertReservationTotalMatchOffer(String reservationId, BigDecimal expectedTotal) {
-        Reservation loaded = reservationRepository.load(reservationId)
-                .get();
+        Reservation loaded = reservationRepository.load(reservationId).get();
+
 
         assertThat(loaded.getTotal()).isEqualTo(expectedTotal);
     }
@@ -87,8 +97,11 @@ public class OfferAcceptanceTest {
         assertThat(spyPaymentGateway.getRequestCount()).isEqualTo(1);
     }
 
-    private String ThereIsProduct(String productId, BigDecimal price) {
-        return productId;
+    private String ThereIsProduct(String name, BigDecimal price) {
+        String id = UUID.randomUUID().toString();
+        productDetails.add(new ProductDetails(id, name, price));
+
+        return id;
     }
 
     private String thereIsCustomer(String id) {
@@ -97,8 +110,8 @@ public class OfferAcceptanceTest {
 
     private SalesFacade thereIsSales() {
         return new SalesFacade(
-                new InMemoryCartStorage(),
-                new OfferCalculator(),
+                cartStorage,
+                new OfferCalculator(productDetails),
                 spyPaymentGateway,
                 reservationRepository);
     }

@@ -1,8 +1,10 @@
 package pl.ekulka.ecommerce.sales;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
+import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
 import pl.ekulka.ecommerce.sales.reservation.SpyPaymentGateway;
 
@@ -10,6 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 
 public class SalesTest {
+
+    private InMemoryProductDetailsProvider productDetails;
+
+    @BeforeEach
+    void setUp() {
+        this.productDetails = new InMemoryProductDetailsProvider();
+    }
     @Test
     void itShowsOffer(){
         SalesFacade sales = thereIsSAlesFacade();
@@ -28,7 +37,7 @@ public class SalesTest {
     private SalesFacade thereIsSAlesFacade() {
         return new SalesFacade(
                 new InMemoryCartStorage(),
-                new OfferCalculator(),
+                new OfferCalculator(productDetails),
                 new SpyPaymentGateway(),
                 new ReservationRepository()
         );

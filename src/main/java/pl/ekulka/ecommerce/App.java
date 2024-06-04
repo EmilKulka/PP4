@@ -9,6 +9,8 @@ import pl.ekulka.ecommerce.infrastructure.PayUPaymentGateway;
 import pl.ekulka.ecommerce.sales.SalesFacade;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
+import pl.ekulka.ecommerce.sales.productdetails.ProductCatalogProductDetailsProvider;
+import pl.ekulka.ecommerce.sales.productdetails.ProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
 
 @SpringBootApplication
@@ -29,12 +31,19 @@ public class App {
     }
 
     @Bean
-    SalesFacade createSales(){
+    SalesFacade createSales(ProductDetailsProvider productDetailsProvider){
         return new SalesFacade(
                 new InMemoryCartStorage(),
-                new OfferCalculator(),
+                new OfferCalculator(productDetailsProvider),
                 new PayUPaymentGateway(),
                 new ReservationRepository()
         );
     }
+
+    @Bean
+    ProductDetailsProvider createProductDetailsProvider(ProductCatalog catalog) {
+        return new ProductCatalogProductDetailsProvider(catalog);
+    }
+
+
 }
