@@ -9,9 +9,11 @@ import org.springframework.web.client.RestTemplate;
 public class PayU {
 
     RestTemplate http;
+    private final PayUCredentials payUCredentials;
 
     public PayU(RestTemplate http, PayUCredentials payUCredentials) {
         this.http = http;
+        this.payUCredentials = payUCredentials;
     }
 
     public OrderCreateResponse handle(OrderCreateRequest orderCreateRequest) {
@@ -23,24 +25,26 @@ public class PayU {
         HttpEntity<OrderCreateRequest> request = new HttpEntity<>(orderCreateRequest, headers);
         //Authorize
         ResponseEntity<OrderCreateResponse> orderCreateResponseResponseEntity = http.postForEntity(
-                "https://secure.snd.payu.com/api/v2_1/orders",
+                String.format("%s/api/v2_1/orders", payUCredentials.getBaseUrl()),
                 request,
                 OrderCreateResponse.class);
+
         //Create order
         return orderCreateResponseResponseEntity.getBody();
     }
 
     private String getToken() {
         String body = String.format("grant_type=client_credentials&client_id=%s&client_secret=%s",
-                "300746",
-                "2ee86a66e5d97e3fadc400c9f19b065d"
+                payUCredentials.getClientId(),
+                payUCredentials.getClientSecret()
         );
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<String> request = new HttpEntity<>(body, headers);
 
-        ResponseEntity<AccessTokenResponse> atResponse = http.postForEntity("https://secure.snd.payu.com/pl/standard/user/oauth/authorize",
+        ResponseEntity<AccessTokenResponse> atResponse = http.postForEntity(
+                String.format("%s/pl/standard/user/oauth/authorize", payUCredentials.getBaseUrl()),
                 request,
                 AccessTokenResponse.class);
 

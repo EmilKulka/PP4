@@ -21,7 +21,6 @@ public class PayuTest {
         assertNotNull(response.getOrderId()); //transaction id
 
 
-
     }
 
     private OrderCreateRequest createExampleOrderCreateRequest() {
@@ -51,8 +50,12 @@ public class PayuTest {
     }
 
     private PayU thereIsPayuU() {
-        return new PayU(new RestTemplate(),
-        new PayUCredentials().);
+        return new PayU(
+                new RestTemplate(),
+                PayUCredentials.sandbox(
+                        "300746",
+                        "2ee86a66e5d97e3fadc400c9f19b065d"
+                ));
     }
 
 //
