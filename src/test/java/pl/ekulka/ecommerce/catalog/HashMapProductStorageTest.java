@@ -2,6 +2,7 @@ package pl.ekulka.ecommerce.catalog;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +34,7 @@ public class HashMapProductStorageTest {
     }
 
     private Product thereIsExampleProduct() {
-        return new Product(UUID.randomUUID(), "test-it", "test");
+        return new Product(UUID.randomUUID(), "test-it", "test", BigDecimal.valueOf(10));
     }
 
     @Test

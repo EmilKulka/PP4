@@ -28,7 +28,7 @@ public class SalesHttpTest {
     ProductCatalog catalog;
 
     private String thereIsExampleProduct(String name, BigDecimal price) {
-        var id = catalog.addProduct(name, name);
+        var id = catalog.addProduct(name, name,price);
         catalog.changePrice(id, price);
         return "productX";
     }
@@ -66,7 +66,5 @@ public class SalesHttpTest {
         assertNotNull(reservationDetailResponseEntity.getBody().getPaymentUrl());
         assertEquals(BigDecimal.valueOf(10.10), reservationDetailResponseEntity.getBody().getTotal());
     }
-
-
 
 }

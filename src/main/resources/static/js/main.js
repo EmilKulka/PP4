@@ -10,13 +10,13 @@ getCurrentOffer = () => {
 }
 
 const addProductToCart = (productId) => {
-    return fetch(`api/add-to-cart/${productId}`, {
+    return fetch(`/api/add-to-cart/${productId}`, {
         method: 'POST'
     });
 }
 
 const acceptOffer = (acceptOfferRequest) => {
-    return fetch("api/accept-offer", {
+    return fetch("/api/accept-offer", {
         method: 'POST',
         headers: {
             "Content-Type":"application/json"
@@ -53,14 +53,14 @@ const refreshCurrentOffer = () => {
 }
 
 
-const initializeCartHandler = (createProductHtmlEl) => {
-    const addToCartBtn = createProductHtmlEl.querySelector("button[data-id]");
+const initializeCartHandler = (productHtmlEl) => {
+    const addToCartBtn = productHtmlEl.querySelector("button[data-id]");
     addToCartBtn.addEventListener("click", () => {
         const productId = event.target.getAttribute("data-id");
         addProductToCart(productId)
-            .then(refreshCurrentOffer());
+            .then(() => refreshCurrentOffer());
     });
-    return createProductHtmlEl;
+    return productHtmlEl;
 }
 
 const checkoutFormEl = document.querySelector('#checkout');
@@ -74,14 +74,14 @@ checkoutFormEl.addEventListener("submit", (event) => {
     }
 
     acceptOffer(acceptOfferRequest)
-        .then(reservationDetails => window.location.href = reservationDetails.paymentUrl
+        .then(reservationDetails => window.location.href = reservationDetails.paymentUrl)
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("it works");
     const productsList = document.querySelector("#productsList");
     getProducts()
-        .then(products => products.map(createProductHtmlEl))
+        .then(productsAsJson => productsAsJson.map(createProductHtmlEl))
         .then(productsHtmls => productsHtmls.map(initializeCartHandler))
         .then(productsHtmls => {
             productsHtmls.forEach(htmlEl => productsList.appendChild(htmlEl))
