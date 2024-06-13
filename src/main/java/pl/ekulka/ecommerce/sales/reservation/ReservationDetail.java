@@ -1,12 +1,18 @@
 package pl.ekulka.ecommerce.sales.reservation;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 public class ReservationDetail {
     private final String reservationId;
     private final String paymentUrl;
 
-    public ReservationDetail(String reservationId, String paymentUrl) {
+    @JsonCreator
+    public ReservationDetail(
+            @JsonProperty("reservationId") String reservationId,
+            @JsonProperty("paymentUrl") String paymentUrl) {
         this.reservationId = reservationId;
         this.paymentUrl = paymentUrl;
     }

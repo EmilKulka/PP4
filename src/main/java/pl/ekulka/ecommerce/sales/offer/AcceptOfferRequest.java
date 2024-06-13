@@ -5,6 +5,9 @@ public class AcceptOfferRequest {
     String lastName;
     String email;
 
+    public AcceptOfferRequest() {
+    }
+
     public String getFirstName() {
         return firstName;
     }

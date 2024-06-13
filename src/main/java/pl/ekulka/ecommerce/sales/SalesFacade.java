@@ -5,6 +5,7 @@ import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
+import pl.ekulka.ecommerce.sales.payment.FakePaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
 import pl.ekulka.ecommerce.sales.payment.PaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;

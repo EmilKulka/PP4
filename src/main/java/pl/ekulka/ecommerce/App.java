@@ -9,6 +9,7 @@ import pl.ekulka.ecommerce.infrastructure.PayUPaymentGateway;
 import pl.ekulka.ecommerce.sales.SalesFacade;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
+import pl.ekulka.ecommerce.sales.payment.FakePaymentGateway;
 import pl.ekulka.ecommerce.sales.productdetails.ProductCatalogProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.productdetails.ProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
@@ -37,7 +38,7 @@ public class App {
         return new SalesFacade(
                 new InMemoryCartStorage(),
                 new OfferCalculator(productDetailsProvider),
-                new PayUPaymentGateway(),
+                new FakePaymentGateway(), // <--- TODO: Real PayU Gateway
                 new ReservationRepository()
         );
     }

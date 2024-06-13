@@ -29,9 +29,12 @@ public class SalesHttpTest {
 
     private String thereIsExampleProduct(String name, BigDecimal price) {
         var id = catalog.addProduct(name, name,price);
-        catalog.changePrice(id, price);
         return "productX";
     }
+
+    /**
+     Currently this test work on FakePaymentGateway
+      **/
 
     @Test
     void itAllowToAcceptOffer() {
@@ -42,7 +45,7 @@ public class SalesHttpTest {
         //add product to cart
         String addProductURL = String.format("http://localhost:%s/%s/%s",
                 port,
-                "api/cart/add=to-cart/",
+                "api/cart/add-to-cart/",
                 productId);
 
         ResponseEntity<Object> addProductResponse = http.postForEntity(addProductURL, null, Object.class);
@@ -55,7 +58,7 @@ public class SalesHttpTest {
                 .setFirstName("Emil")
                 .setLastName("Kulka");
 
-        ResponseEntity<ReservationDetail> reservationDetailResponseEntity = http.postForEntity(acceptOfferUrl, null, ReservationDetail.class);
+        ResponseEntity<ReservationDetail> reservationDetailResponseEntity = http.postForEntity(acceptOfferUrl, acceptOfferRequest, ReservationDetail.class);
 
         //Arrange
         //-> reservationWithIdExists
