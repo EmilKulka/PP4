@@ -6,7 +6,7 @@ import pl.ekulka.ecommerce.catalog.ProductCatalog;
 import java.util.Optional;
 
 public class ProductCatalogProductDetailsProvider implements ProductDetailsProvider {
-    private ProductCatalog productCatalog;
+    private final ProductCatalog productCatalog;
 
     public ProductCatalogProductDetailsProvider(ProductCatalog catalog) {
         this.productCatalog = catalog;

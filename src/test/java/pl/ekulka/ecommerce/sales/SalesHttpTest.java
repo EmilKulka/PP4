@@ -51,14 +51,20 @@ public class SalesHttpTest {
         ResponseEntity<Object> addProductResponse = http.postForEntity(addProductURL, null, Object.class);
 
         //accept offer
-        String acceptOfferUrl = String.format("http://localhost:%s/%s", port, "api/accept-offer");
+        String acceptOfferUrl = String.format(
+                "http://localhost:%s/%s",
+                port,
+                "api/accept-offer");
         AcceptOfferRequest acceptOfferRequest = new AcceptOfferRequest();
         acceptOfferRequest
                 .setEmail("xyz@gmail.com")
                 .setFirstName("Emil")
                 .setLastName("Kulka");
 
-        ResponseEntity<ReservationDetail> reservationDetailResponseEntity = http.postForEntity(acceptOfferUrl, acceptOfferRequest, ReservationDetail.class);
+        ResponseEntity<ReservationDetail> reservationDetailResponseEntity = http.postForEntity(
+                acceptOfferUrl,
+                acceptOfferRequest,
+                ReservationDetail.class);
 
         //Arrange
         //-> reservationWithIdExists

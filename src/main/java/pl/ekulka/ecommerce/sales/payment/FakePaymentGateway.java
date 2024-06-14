@@ -7,7 +7,7 @@ public class FakePaymentGateway implements PaymentGateway{
     public PaymentDetails registerPayment(RegisterPaymentRequest registerPaymentRequest) {
         RegisterPaymentResponse response = new RegisterPaymentResponse(
                 UUID.randomUUID().toString(),
-                "https://fake-gateway"
+                "https://www.kapitan.pl/"
         );
 
         return new PaymentDetails(

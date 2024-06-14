@@ -5,11 +5,15 @@ import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
 import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
+import pl.ekulka.ecommerce.sales.productdetails.ProductCatalogProductDetailsProvider;
+import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
+import pl.ekulka.ecommerce.sales.productdetails.ProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
 import pl.ekulka.ecommerce.sales.reservation.SpyPaymentGateway;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public class SalesTest {
 
@@ -46,11 +50,12 @@ public class SalesTest {
     @Test
     void itAllowsToAddProductToCart(){
         var customerId = thereIsExampleCustomer("Emil");
-        var productId = thereIsProduct("product", BigDecimal.valueOf(10));
+        var product = thereIsProduct("product", BigDecimal.valueOf(10));
+
 
         SalesFacade sales = thereIsSAlesFacade();
 
-        sales.addToCart(customerId, productId);
+        sales.addToCart(customerId, product);
 
         Offer offer = sales.getCurrentOffer(customerId);
         assertEquals(BigDecimal.valueOf(10), offer.getTotal());
@@ -98,7 +103,13 @@ public class SalesTest {
 
 
     private String thereIsProduct(String name, BigDecimal price) {
-        return name;
+        String id = UUID.randomUUID().toString();
+        this.productDetails.add(new ProductDetails(
+               id,
+               name,
+               price
+        ));
+        return id;
     }
 
     @Test
