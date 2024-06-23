@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 public class ReservationRepository {
-    HashMap<String, Reservation> reservations;
+    public HashMap<String, Reservation> reservations;
 
     public ReservationRepository() {
         this.reservations = new HashMap<>();

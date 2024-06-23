@@ -1,6 +1,9 @@
 package pl.ekulka.ecommerce.sales;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
+import pl.ekulka.ecommerce.payu.PayU;
+import pl.ekulka.ecommerce.payu.PayUCredentials;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
@@ -43,7 +46,14 @@ public class SalesTest {
                 new InMemoryCartStorage(),
                 new OfferCalculator(productDetails),
                 new SpyPaymentGateway(),
-                new ReservationRepository()
+                new ReservationRepository(),
+                new PayU(
+                        new RestTemplate(),
+                        PayUCredentials.sandbox(
+                                "300746",
+                                "2ee86a66e5d97e3fadc400c9f19b065d"
+                        )
+                )
         );
     }
 

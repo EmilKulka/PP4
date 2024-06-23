@@ -1,5 +1,7 @@
 package pl.ekulka.ecommerce.sales;
 
+import pl.ekulka.ecommerce.payu.OrderCreateRequest;
+import pl.ekulka.ecommerce.payu.PayU;
 import pl.ekulka.ecommerce.sales.cart.Cart;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
@@ -20,12 +22,14 @@ public class SalesFacade {
     private OfferCalculator offerCalculator;
     private PaymentGateway paymentGateway;
     private ReservationRepository reservationRepository;
+    private PayU payU;
 
-    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationRepository reservationRepository) {
+    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationRepository reservationRepository, PayU payU) {
         this.cartStorage = cartStorage;
         this.offerCalculator = offerCalculator;
         this.paymentGateway = paymentGateway;
         this.reservationRepository = reservationRepository;
+        this.payU = payU;
     }
 
     public Offer getCurrentOffer(String customerId) {
@@ -54,6 +58,28 @@ public class SalesFacade {
 
         return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl());
     }
+
+    public ReservationDetail acceptOfferPayU(String customerId, AcceptOfferRequest acceptOfferRequest) {
+        String reservationId = UUID.randomUUID().toString();
+        Offer offer = this.getCurrentOffer(customerId);
+
+        PaymentDetails paymentDetails = paymentGateway.registerPayment(
+                OrderCreateRequest.of(reservationId, acceptOfferRequest, offer.getTotal(), offer)
+        );
+        Reservation reservation = Reservation.of(
+                reservationId,
+                customerId,
+                acceptOfferRequest,
+                offer,
+                paymentDetails);
+
+        reservationRepository.add(reservation);
+
+        return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl());
+    }
+
+
+
 
     public void addToCart(String customerId, String productId) {
         Cart cart = loadCartForCustomer(customerId);

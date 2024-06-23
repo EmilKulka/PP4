@@ -31,7 +31,7 @@ public class    PayuTest {
                 .setMerchantPosId("300746")
                 .setDescription("My ebook")
                 .setCurrencyCode("PLN")
-                .setTotalAmount("21000")
+                .setTotalAmount("22000") //
                 .setExtOrderId(UUID.randomUUID().toString())
                 .setBuyer((new Buyer())
                         .setEmail("john.doe@example.com")
@@ -43,7 +43,11 @@ public class    PayuTest {
                         new Product()
                                 .setName("Product 1")
                                 .setQuantity(1)
-                                .setUnitPrice(21000)
+                                .setUnitPrice(21000),
+                        new Product()
+                                .setName("Product 2")
+                                .setQuantity(2)
+                                .setUnitPrice(1000)
                 ));
         ;
         return createRequest;

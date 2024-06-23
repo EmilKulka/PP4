@@ -1,10 +1,51 @@
 package pl.ekulka.ecommerce.payu;
 
+import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
+import pl.ekulka.ecommerce.sales.offer.Offer;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderCreateRequest {
     String customerIp;
     String notifyUrl;
+
+    String merchantPosId;
+    String description;
+    String currencyCode;
+    String totalAmount;
+    String extOrderId;
+    Buyer buyer;
+    List<Product> products;
+
+    public static OrderCreateRequest of(String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total, Offer products) {
+        return new OrderCreateRequest()
+                .setNotifyUrl("https://my.example.shop.ekulka.pl/api/order")
+                .setCustomerIp("127.0.0.1")
+                .setMerchantPosId("300746")
+                .setDescription("Lorem ipsum")
+                .setCurrencyCode("PLN")
+                .setTotalAmount(total.toString())
+                .setExtOrderId(reservationId)
+                .setBuyer(new Buyer()
+                        .setLanguage("pl")
+                        .setEmail(acceptOfferRequest.getEmail())
+                        .setFirstName(acceptOfferRequest.getFirstName())
+                        .setLastName(acceptOfferRequest.getLastName())
+                )
+                .setProducts(products.getLines().stream()
+                        .map(lineItem -> new Product(
+                                "Lorem Ipsum",
+                                lineItem.getPrice().intValue(),
+                                lineItem.getQuantity()
+                        )
+                        )
+                        .collect(Collectors.toList())
+                );
+    }
 
     public String getNotifyUrl() {
         return notifyUrl;
@@ -14,14 +55,6 @@ public class OrderCreateRequest {
         this.notifyUrl = notifyUrl;
         return this;
     }
-
-    String merchantPosId;
-    String description;
-    String currencyCode;
-    String totalAmount;
-    String extOrderId;
-    Buyer buyer;
-    List<Product> products;
 
 
     public String getCustomerIp() {
@@ -99,30 +132,3 @@ public class OrderCreateRequest {
 
 
 
-//{        "notifyUrl": "https://your.eshop.com/notify",
-//        "customerIp": "127.0.0.1",
-//        "merchantPosId": "300746",
-//        "description": "RTV market",
-//        "currencyCode": "PLN",
-//        "totalAmount": "21000",
-//        "extOrderId":"2uikc6gjd99b4lxc75ip4k",
-//        "buyer": {
-//            "email": "john.doe@example.com",
-//            "phone": "654111654",
-//            "firstName": "John",
-//            "lastName": "Doe",
-//            "language": "pl"
-//        },
-//        "products": [
-//            {
-//		"name": "Wireless Mouse for Laptop",
-//                "unitPrice": "15000",
-//                "quantity": "1"
-//            },
-//            {
-//                "name": "HDMI cable",
-//                "unitPrice": "6000",
-//                "quantity": "1"
-//            }
-//        ]
-//    }

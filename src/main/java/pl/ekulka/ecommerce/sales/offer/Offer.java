@@ -22,4 +22,8 @@ public class Offer {
     public BigDecimal getTotal() {
         return total;
     }
+
+    public List<OfferLine> getLines() {
+        return lines;
+    }
 }

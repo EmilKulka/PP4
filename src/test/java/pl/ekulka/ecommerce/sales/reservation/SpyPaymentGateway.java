@@ -1,5 +1,6 @@
 package pl.ekulka.ecommerce.sales.reservation;
 
+import pl.ekulka.ecommerce.payu.OrderCreateRequest;
 import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
 import pl.ekulka.ecommerce.sales.payment.PaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
@@ -21,5 +22,10 @@ public class SpyPaymentGateway implements PaymentGateway {
                 "http://spy-gateway",
                 UUID.randomUUID().toString(),
                 UUID.randomUUID().toString());
+    }
+
+    @Override
+    public PaymentDetails registerPayment(OrderCreateRequest registerPaymentRequest) {
+        return null;
     }
 }

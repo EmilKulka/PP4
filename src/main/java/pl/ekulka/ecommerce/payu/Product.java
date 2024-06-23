@@ -5,6 +5,15 @@ public class Product {
     Integer unitPrice;
     Integer quantity;
 
+    public Product() {
+    }
+
+    public Product(String name, Integer unitPrice, Integer quantity) {
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
+
     public String getName() {
         return name;
     }

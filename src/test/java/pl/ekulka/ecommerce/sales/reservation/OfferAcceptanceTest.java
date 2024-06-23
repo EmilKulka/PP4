@@ -2,6 +2,9 @@ package pl.ekulka.ecommerce.sales.reservation;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestTemplate;
+import pl.ekulka.ecommerce.payu.PayU;
+import pl.ekulka.ecommerce.payu.PayUCredentials;
 import pl.ekulka.ecommerce.sales.SalesFacade;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
@@ -113,6 +116,13 @@ public class OfferAcceptanceTest {
                 cartStorage,
                 new OfferCalculator(productDetails),
                 spyPaymentGateway,
-                reservationRepository);
+                reservationRepository,
+                new PayU(
+                        new RestTemplate(),
+                        PayUCredentials.sandbox(
+                                "300746",
+                                "2ee86a66e5d97e3fadc400c9f19b065d"
+                        )
+                ));
     }
 }

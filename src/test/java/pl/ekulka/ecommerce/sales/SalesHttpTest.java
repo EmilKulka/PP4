@@ -28,7 +28,7 @@ public class SalesHttpTest {
     ProductCatalog catalog;
 
     private String thereIsExampleProduct(String name, BigDecimal price) {
-        var id = catalog.addProduct(name, name,price);
+        var id = catalog.addProduct(name, "Example Product",price);
         return "productX";
     }
 
