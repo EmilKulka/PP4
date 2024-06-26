@@ -26,10 +26,10 @@ public class SalesController {
         sales.addToCart(customerId, productId);
     };
 
-    @PostMapping("api/accept-offer")
+    @PostMapping("/api/accept-offer")
     ReservationDetail acceptOffer(@RequestBody AcceptOfferRequest acceptOfferRequest) {
         String customerId = getCurrentCustomerId();
-        ReservationDetail reservationDetail = sales.acceptOffer(customerId, acceptOfferRequest);
+        ReservationDetail reservationDetail = sales.acceptOfferPayU(customerId, acceptOfferRequest);
         return  reservationDetail;
     }
 

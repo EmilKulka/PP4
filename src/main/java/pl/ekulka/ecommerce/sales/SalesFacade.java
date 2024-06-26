@@ -22,14 +22,13 @@ public class SalesFacade {
     private OfferCalculator offerCalculator;
     private PaymentGateway paymentGateway;
     private ReservationRepository reservationRepository;
-    private PayU payU;
 
-    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationRepository reservationRepository, PayU payU) {
+
+    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationRepository reservationRepository) {
         this.cartStorage = cartStorage;
         this.offerCalculator = offerCalculator;
         this.paymentGateway = paymentGateway;
         this.reservationRepository = reservationRepository;
-        this.payU = payU;
     }
 
     public Offer getCurrentOffer(String customerId) {
@@ -56,7 +55,7 @@ public class SalesFacade {
 
         reservationRepository.add(reservation);
 
-        return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl());
+        return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl(), offer.getTotal());
     }
 
     public ReservationDetail acceptOfferPayU(String customerId, AcceptOfferRequest acceptOfferRequest) {
@@ -75,7 +74,7 @@ public class SalesFacade {
 
         reservationRepository.add(reservation);
 
-        return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl());
+        return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl(), offer.getTotal());
     }
 
 

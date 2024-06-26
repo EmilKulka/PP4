@@ -6,6 +6,9 @@ import java.util.*;
 public class ProductCatalog {
     ProductStorage productStorage;
 
+    //public ProductCatalog() {
+    //}
+
     public ProductCatalog(ProductStorage productStorage) {
         this.productStorage = productStorage;
     }

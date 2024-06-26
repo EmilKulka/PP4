@@ -6,13 +6,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.ekulka.ecommerce.catalog.Product;
 import pl.ekulka.ecommerce.catalog.ProductCatalog;
+import pl.ekulka.ecommerce.catalog.ProductStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,35 +31,36 @@ public class SalesHttpTest {
 
     @Autowired
     ProductCatalog catalog;
-
+    
     private String thereIsExampleProduct(String name, BigDecimal price) {
         var id = catalog.addProduct(name, "Example Product",price);
-        return "productX";
+        return id;
     }
-
-    /**
-     Currently this test work on FakePaymentGateway
-      **/
 
     @Test
     void itAllowToAcceptOffer() {
         //ARRANGE
-        String productId = thereIsExampleProduct("Example Product", BigDecimal.valueOf(10.10));
+        String productId = thereIsExampleProduct("Example Product", BigDecimal.valueOf(100));
 
         //ACT
         //add product to cart
         String addProductURL = String.format("http://localhost:%s/%s/%s",
                 port,
-                "api/cart/add-to-cart/",
+                "api/add-to-cart",
                 productId);
 
+
         ResponseEntity<Object> addProductResponse = http.postForEntity(addProductURL, null, Object.class);
+
+
+
 
         //accept offer
         String acceptOfferUrl = String.format(
                 "http://localhost:%s/%s",
                 port,
                 "api/accept-offer");
+
         AcceptOfferRequest acceptOfferRequest = new AcceptOfferRequest();
         acceptOfferRequest
                 .setEmail("xyz@gmail.com")
@@ -70,10 +76,13 @@ public class SalesHttpTest {
         //-> reservationWithIdExists
         //->thereIsPaymentURLAvailable
 
+
+
+        assertEquals(addProductResponse.getStatusCode(), HttpStatus.OK);
         assertEquals(reservationDetailResponseEntity.getStatusCode(), HttpStatus.OK);
         assertNotNull(reservationDetailResponseEntity.getBody().getReservationId());
         assertNotNull(reservationDetailResponseEntity.getBody().getPaymentUrl());
-        assertEquals(BigDecimal.valueOf(10.10), reservationDetailResponseEntity.getBody().getTotal());
+        assertEquals(BigDecimal.valueOf(100), reservationDetailResponseEntity.getBody().getTotal());
     }
 
 }
