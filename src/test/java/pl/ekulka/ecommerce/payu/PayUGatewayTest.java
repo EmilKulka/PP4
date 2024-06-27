@@ -8,7 +8,7 @@ import pl.ekulka.ecommerce.sales.SalesFacade;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
-import pl.ekulka.ecommerce.sales.payment.PayUGateway;
+import pl.ekulka.ecommerce.infrastructure.PayUGateway;
 import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;

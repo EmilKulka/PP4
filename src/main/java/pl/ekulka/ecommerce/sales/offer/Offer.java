@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Offer {
     private final List<OfferLine> lines;
-    private int itemsCount;
+    private final int itemsCount;
     private final BigDecimal total;
 
     public Offer(List<OfferLine> lines, BigDecimal total) {

@@ -4,19 +4,20 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-import pl.ekulka.ecommerce.catalog.ArrayListProductStorage;
+import pl.ekulka.ecommerce.catalog.storage.ArrayListProductStorage;
 import pl.ekulka.ecommerce.catalog.ProductCatalog;
-import pl.ekulka.ecommerce.infrastructure.PayUPaymentGateway;
 import pl.ekulka.ecommerce.payu.PayU;
 import pl.ekulka.ecommerce.payu.PayUCredentials;
 import pl.ekulka.ecommerce.sales.SalesFacade;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
-import pl.ekulka.ecommerce.sales.payment.FakePaymentGateway;
-import pl.ekulka.ecommerce.sales.payment.PayUGateway;
+import pl.ekulka.ecommerce.infrastructure.PayUGateway;
 import pl.ekulka.ecommerce.sales.productdetails.ProductCatalogProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.productdetails.ProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
+import pl.ekulka.validator.product.DescriptionValidator;
+import pl.ekulka.validator.product.NameValidator;
+import pl.ekulka.validator.product.PriceValidator;
 
 import java.math.BigDecimal;
 
@@ -26,6 +27,20 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
+    @Bean
+    NameValidator nameValidator() {
+        return new NameValidator();
+    }
+
+    @Bean
+    DescriptionValidator descriptionValidator() {
+        return new DescriptionValidator();
+    }
+
+    @Bean
+    PriceValidator priceValidator() {
+        return new PriceValidator();
+    }
     @Bean
     ProductCatalog createMyProductCatalog() {
         ProductCatalog productCatalog = new ProductCatalog(new ArrayListProductStorage());

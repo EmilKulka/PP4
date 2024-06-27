@@ -1,6 +1,8 @@
 package pl.ekulka.ecommerce.catalog;
 
 import org.junit.jupiter.api.Test;
+import pl.ekulka.ecommerce.catalog.model.Product;
+import pl.ekulka.ecommerce.catalog.storage.ArrayListProductStorage;
 
 import java.math.BigDecimal;
 import java.util.List;

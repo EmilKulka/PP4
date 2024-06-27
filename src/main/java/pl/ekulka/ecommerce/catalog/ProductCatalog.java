@@ -1,5 +1,8 @@
 package pl.ekulka.ecommerce.catalog;
 
+import pl.ekulka.ecommerce.catalog.model.Product;
+import pl.ekulka.ecommerce.catalog.storage.ProductStorage;
+
 import java.math.BigDecimal;
 import java.util.*;
 

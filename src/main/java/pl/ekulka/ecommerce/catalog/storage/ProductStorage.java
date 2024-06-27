@@ -1,4 +1,6 @@
-package pl.ekulka.ecommerce.catalog;
+package pl.ekulka.ecommerce.catalog.storage;
+
+import pl.ekulka.ecommerce.catalog.model.Product;
 
 import java.util.List;
 

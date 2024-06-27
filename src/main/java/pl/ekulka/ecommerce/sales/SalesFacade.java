@@ -1,17 +1,15 @@
 package pl.ekulka.ecommerce.sales;
 
 import pl.ekulka.ecommerce.payu.OrderCreateRequest;
-import pl.ekulka.ecommerce.payu.PayU;
 import pl.ekulka.ecommerce.sales.cart.Cart;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
-import pl.ekulka.ecommerce.sales.payment.FakePaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
-import pl.ekulka.ecommerce.sales.payment.PaymentGateway;
+import pl.ekulka.ecommerce.infrastructure.PaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
-import pl.ekulka.ecommerce.sales.reservation.Reservation;
+import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
 

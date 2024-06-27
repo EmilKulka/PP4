@@ -2,7 +2,7 @@ package pl.ekulka.ecommerce.sales.reservation;
 
 import pl.ekulka.ecommerce.payu.OrderCreateRequest;
 import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
-import pl.ekulka.ecommerce.sales.payment.PaymentGateway;
+import pl.ekulka.ecommerce.infrastructure.PaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
 
 import java.util.UUID;

@@ -7,11 +7,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.ekulka.ecommerce.catalog.model.Product;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
@@ -44,5 +45,10 @@ public class HttpProductCatalogTest {
         assertThat(response.getBody())
                 .extracting("name")
                 .contains("Example Product");
+        assertThat(response.getBody().length).isEqualTo(4); // catalog initialized with 3 products already
+        assertThat(response.getBody())
+                .extracting("id")
+                .containsOnlyOnce(id);
+
     }
 }

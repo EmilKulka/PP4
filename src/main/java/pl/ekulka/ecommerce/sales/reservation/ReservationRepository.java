@@ -1,5 +1,7 @@
 package pl.ekulka.ecommerce.sales.reservation;
 
+import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
+
 import java.util.HashMap;
 import java.util.Optional;
 

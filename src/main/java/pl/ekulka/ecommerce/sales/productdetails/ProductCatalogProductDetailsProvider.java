@@ -1,6 +1,6 @@
 package pl.ekulka.ecommerce.sales.productdetails;
 
-import pl.ekulka.ecommerce.catalog.Product;
+import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.ProductCatalog;
 
 import java.util.Optional;

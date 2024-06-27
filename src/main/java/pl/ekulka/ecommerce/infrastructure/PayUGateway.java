@@ -1,13 +1,14 @@
-package pl.ekulka.ecommerce.sales.payment;
+package pl.ekulka.ecommerce.infrastructure;
 
-import pl.ekulka.ecommerce.payu.Buyer;
 import pl.ekulka.ecommerce.payu.OrderCreateRequest;
 import pl.ekulka.ecommerce.payu.OrderCreateResponse;
 import pl.ekulka.ecommerce.payu.PayU;
+import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
+import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
 
 import java.util.UUID;
 
-public class PayUGateway implements PaymentGateway{
+public class PayUGateway implements PaymentGateway {
     private final PayU payU;
     public PayUGateway(PayU payU) {
         this.payU = payU;

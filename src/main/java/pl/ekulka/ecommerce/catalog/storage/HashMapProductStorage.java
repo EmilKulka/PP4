@@ -1,9 +1,11 @@
-package pl.ekulka.ecommerce.catalog;
+package pl.ekulka.ecommerce.catalog.storage;
+
+import pl.ekulka.ecommerce.catalog.model.Product;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class HashMapProductStorage implements  ProductStorage{
+public class HashMapProductStorage implements ProductStorage {
     HashMap<String, Product> products;
 
     public HashMapProductStorage() {

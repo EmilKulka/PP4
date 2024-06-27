@@ -2,11 +2,10 @@ package pl.ekulka.ecommerce.playground;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestClassOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import pl.ekulka.ecommerce.catalog.Product;
+import pl.ekulka.ecommerce.catalog.model.Product;
 
 import java.math.BigDecimal;
 import java.util.UUID;

@@ -1,9 +1,9 @@
-package pl.ekulka.ecommerce.catalog;
+package pl.ekulka.ecommerce.catalog.storage;
+
+import pl.ekulka.ecommerce.catalog.model.Product;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class ArrayListProductStorage implements ProductStorage {
     private ArrayList<Product> products;
