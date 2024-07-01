@@ -12,7 +12,7 @@ import pl.ekulka.ecommerce.infrastructure.PayUGateway;
 import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
-import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
+import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PayUGatewayTest {
 
     private PayUGateway gateway;
-    private ReservationRepository reservationRepository;
+    private ReservationRepositoryTemp reservationRepository;
     private InMemoryProductDetailsProvider productDetails;
     private InMemoryCartStorage cartStorage;
 
@@ -39,7 +39,7 @@ public class PayUGatewayTest {
                         )
                 )
         );
-        reservationRepository = new ReservationRepository();
+        reservationRepository = new ReservationRepositoryTemp();
         productDetails = new InMemoryProductDetailsProvider();
         cartStorage = new InMemoryCartStorage();
     }

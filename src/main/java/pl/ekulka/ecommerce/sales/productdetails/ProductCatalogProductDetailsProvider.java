@@ -1,14 +1,14 @@
 package pl.ekulka.ecommerce.sales.productdetails;
 
 import pl.ekulka.ecommerce.catalog.model.Product;
-import pl.ekulka.ecommerce.catalog.ProductCatalog;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogTemp;
 
 import java.util.Optional;
 
 public class ProductCatalogProductDetailsProvider implements ProductDetailsProvider {
-    private final ProductCatalog productCatalog;
+    private final ProductCatalogTemp productCatalog;
 
-    public ProductCatalogProductDetailsProvider(ProductCatalog catalog) {
+    public ProductCatalogProductDetailsProvider(ProductCatalogTemp catalog) {
         this.productCatalog = catalog;
     }
 

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import pl.ekulka.ecommerce.catalog.storage.ArrayListProductStorage;
-import pl.ekulka.ecommerce.catalog.ProductCatalog;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogTemp;
 import pl.ekulka.ecommerce.payu.PayU;
 import pl.ekulka.ecommerce.payu.PayUCredentials;
 import pl.ekulka.ecommerce.sales.SalesFacade;
@@ -14,7 +14,7 @@ import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
 import pl.ekulka.ecommerce.infrastructure.PayUGateway;
 import pl.ekulka.ecommerce.sales.productdetails.ProductCatalogProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.productdetails.ProductDetailsProvider;
-import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
+import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
 import pl.ekulka.validator.product.DescriptionValidator;
 import pl.ekulka.validator.product.NameValidator;
 import pl.ekulka.validator.product.PriceValidator;
@@ -42,8 +42,8 @@ public class App {
         return new PriceValidator();
     }
     @Bean
-    ProductCatalog createMyProductCatalog() {
-        ProductCatalog productCatalog = new ProductCatalog(new ArrayListProductStorage());
+    ProductCatalogTemp createMyProductCatalog() {
+        ProductCatalogTemp productCatalog = new ProductCatalogTemp(new ArrayListProductStorage());
         productCatalog.addProduct("Lego set 1", "nice one", BigDecimal.valueOf(1000));
         productCatalog.addProduct("Lego set 2", "nice one", BigDecimal.valueOf(1000));
         productCatalog.addProduct("Lego set 3", "nice one", BigDecimal.valueOf(1000));
@@ -67,12 +67,12 @@ public class App {
                 new InMemoryCartStorage(),
                 new OfferCalculator(productDetailsProvider),
                 new PayUGateway(createSandboxPayU()),
-                new ReservationRepository()
+                new ReservationRepositoryTemp()
         );
     }
 
     @Bean
-    ProductDetailsProvider createProductDetailsProvider(ProductCatalog catalog) {
+    ProductDetailsProvider createProductDetailsProvider(ProductCatalogTemp catalog) {
         return new ProductCatalogProductDetailsProvider(catalog);
     }
 

@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.repositories;
+package pl.ekulka.ecommerce.repositories.catalogRepository;
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import pl.ekulka.ecommerce.catalog.model.Product;
-import pl.ekulka.ecommerce.catalog.ProductCatalogService;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class ProductServiceIntegrationTest {
 
     @Autowired
-    private ProductCatalogService service;
+    private ProductCatalogServiceImpl service;
 
     @Test
     void itAllowToAddProductToRepository() {
@@ -46,7 +46,7 @@ public class ProductServiceIntegrationTest {
         assertThat(productName).isEqualTo(foundProduct.get().getName());
         assertThat(productDescription).isEqualTo(foundProduct.get().getDescription());
         assertThat(productPrice).isEqualTo(foundProduct.get().getPrice());
-        assertThat(allProducts).hasSize(1);
+        assertThat(allProducts).hasSize(2); // DB initialized with 1 product already
     }
 
     @Test

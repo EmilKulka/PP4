@@ -8,6 +8,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.ekulka.ecommerce.catalog.model.Product;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogTemp;
 
 import java.math.BigDecimal;
 
@@ -16,14 +17,14 @@ import static org.assertj.core.api.Assertions.*;
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-public class HttpProductCatalogTest {
+public class HttpProductCatalogTempTest {
 
     @LocalServerPort
     private int localPort;
     @Autowired
     TestRestTemplate http;
     @Autowired
-    ProductCatalog productCatalog;
+    ProductCatalogTemp productCatalog;
     @Test
     void homepageLoads() {
         var url = String.format("http://localhost:%s/%s", localPort, "/");

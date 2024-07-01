@@ -8,7 +8,9 @@ import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
 import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
 import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
+import pl.ekulka.ecommerce.sales.reservation.model.ClientDetails;
 import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
+import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -19,14 +21,14 @@ import static org.assertj.core.api.Assertions.*;
 public class OfferAcceptanceTest {
 
     private SpyPaymentGateway spyPaymentGateway;
-    private ReservationRepository reservationRepository;
+    private ReservationRepositoryTemp reservationRepository;
     private InMemoryProductDetailsProvider productDetails;
     private InMemoryCartStorage cartStorage;
 
     @BeforeEach
     void setUp() {
         spyPaymentGateway = new SpyPaymentGateway();
-        reservationRepository = new ReservationRepository();
+        reservationRepository = new ReservationRepositoryTemp();
         productDetails = new InMemoryProductDetailsProvider();
         cartStorage = new InMemoryCartStorage();
     }

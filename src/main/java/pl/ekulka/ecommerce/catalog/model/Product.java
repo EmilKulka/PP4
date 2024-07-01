@@ -33,6 +33,7 @@ public class Product {
     )
     @NotNull(message = "Price cannot be null")
     @Min(value = 0, message = "Price cannot be lower than 0")
+    @Column(precision =38,scale = 0)
     private BigDecimal price;
 
     public Product() {

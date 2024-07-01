@@ -8,7 +8,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import pl.ekulka.ecommerce.catalog.ProductCatalog;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogTemp;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 
@@ -25,7 +25,7 @@ public class SalesHttpTest {
     private int port;
 
     @Autowired
-    ProductCatalog catalog;
+    ProductCatalogTemp catalog;
     
     private String thereIsExampleProduct(String name, BigDecimal price) {
         var id = catalog.addProduct(name, "Example Product",price);

@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.catalog;
+package pl.ekulka.ecommerce.catalog.service;
 
 import org.springframework.stereotype.Service;
 import pl.ekulka.ecommerce.catalog.model.Product;
@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductCatalogService {
+public class ProductCatalogServiceImpl implements ProductCatalogService{
     private final ProductRepository repository;
     private final NameValidator nameValidator;
     private final DescriptionValidator descriptionValidator;
     private final PriceValidator priceValidator;
 
-    public ProductCatalogService(ProductRepository repository, NameValidator nameValidator, DescriptionValidator descriptionValidator, PriceValidator priceValidator) {
+    public ProductCatalogServiceImpl(ProductRepository repository, NameValidator nameValidator, DescriptionValidator descriptionValidator, PriceValidator priceValidator) {
         this.repository = repository;
         this.nameValidator = nameValidator;
         this.descriptionValidator = descriptionValidator;

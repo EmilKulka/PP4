@@ -1,32 +1,34 @@
 package pl.ekulka.ecommerce.sales.reservation.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
-import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
+import jakarta.persistence.*;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.Offer;
-import pl.ekulka.ecommerce.sales.reservation.ClientDetails;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 
-
+@Entity
+@Table(name = "Reservations")
 public class Reservation {
-    private final String reservationId;
+    @Id
+    private String reservationId;
 
-    private final ClientDetails clientDetails;
-    private final BigDecimal total;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private ClientDetails customerId;
+    private BigDecimal total;
     private Instant paidAt;
 
-    public Reservation(String reservationId, ClientDetails clientDetails, BigDecimal total) {
+    public Reservation() {
+    }
 
+    public Reservation(String reservationId, ClientDetails customerId, BigDecimal total) {
         this.reservationId = reservationId;
-        this.clientDetails = clientDetails;
+        this.customerId = customerId;
         this.total = total;
     }
 
-    public static Reservation of(String reservationId, String customerId, AcceptOfferRequest acceptOfferRequest, Offer offer, PaymentDetails paymentDetails) {
+    public static Reservation of(String reservationId, String customerId, AcceptOfferRequest acceptOfferRequest, Offer offer) {
         return new Reservation(
                 reservationId,
                 new ClientDetails(customerId, acceptOfferRequest.getFirstName(), acceptOfferRequest.getLastName(), acceptOfferRequest.getEmail()),
@@ -39,7 +41,7 @@ public class Reservation {
     }
 
     public ClientDetails getCustomerDetails() {
-        return clientDetails;
+        return customerId;
     }
 
     public BigDecimal getTotal() {

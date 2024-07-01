@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.catalog;
+package pl.ekulka.ecommerce.catalog.service;
 
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.storage.ProductStorage;
@@ -6,13 +6,10 @@ import pl.ekulka.ecommerce.catalog.storage.ProductStorage;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class ProductCatalog {
+public class ProductCatalogTemp {
     ProductStorage productStorage;
 
-    //public ProductCatalog() {
-    //}
-
-    public ProductCatalog(ProductStorage productStorage) {
+    public ProductCatalogTemp(ProductStorage productStorage) {
         this.productStorage = productStorage;
     }
 

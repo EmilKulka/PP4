@@ -1,5 +1,6 @@
-package pl.ekulka.ecommerce.repositories;
+package pl.ekulka.ecommerce.repositories.catalogRepository;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import pl.ekulka.ecommerce.catalog.model.Product;
-import pl.ekulka.ecommerce.catalog.ProductCatalogService;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -15,10 +16,11 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 public class ProductValidationTest {
 
     @Autowired
-    private ProductCatalogService productService;
+    private ProductCatalogServiceImpl productService;
 
     private Product validProduct;
 

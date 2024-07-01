@@ -1,14 +1,14 @@
-package pl.ekulka.ecommerce.sales.reservation;
+package pl.ekulka.ecommerce.sales.reservation.repository;
 
 import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
 
 import java.util.HashMap;
 import java.util.Optional;
 
-public class ReservationRepository {
+public class ReservationRepositoryTemp {
     public HashMap<String, Reservation> reservations;
 
-    public ReservationRepository() {
+    public ReservationRepositoryTemp() {
         this.reservations = new HashMap<>();
     }
 

@@ -11,7 +11,7 @@ import pl.ekulka.ecommerce.infrastructure.PaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
 import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
-import pl.ekulka.ecommerce.sales.reservation.ReservationRepository;
+import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
 
 import java.util.UUID;
 
@@ -19,10 +19,10 @@ public class SalesFacade {
     private InMemoryCartStorage cartStorage;
     private OfferCalculator offerCalculator;
     private PaymentGateway paymentGateway;
-    private ReservationRepository reservationRepository;
+    private ReservationRepositoryTemp reservationRepository;
 
 
-    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationRepository reservationRepository) {
+    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationRepositoryTemp reservationRepository) {
         this.cartStorage = cartStorage;
         this.offerCalculator = offerCalculator;
         this.paymentGateway = paymentGateway;
@@ -48,8 +48,8 @@ public class SalesFacade {
                 reservationId,
                 customerId,
                 acceptOfferRequest,
-                offer,
-                paymentDetails);
+                offer
+        );
 
         reservationRepository.add(reservation);
 
@@ -67,15 +67,13 @@ public class SalesFacade {
                 reservationId,
                 customerId,
                 acceptOfferRequest,
-                offer,
-                paymentDetails);
+                offer
+        );
 
         reservationRepository.add(reservation);
 
         return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl(), offer.getTotal());
     }
-
-
 
 
     public void addToCart(String customerId, String productId) {
