@@ -13,9 +13,10 @@ public class Reservation {
     @Id
     private String reservationId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     private ClientDetails customerId;
+    @Column(precision =38,scale = 0)
     private BigDecimal total;
     private Instant paidAt;
 

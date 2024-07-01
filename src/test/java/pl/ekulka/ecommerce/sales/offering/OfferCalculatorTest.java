@@ -1,7 +1,12 @@
 package pl.ekulka.ecommerce.sales.offering;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import pl.ekulka.ecommerce.catalog.model.Product;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
 import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
@@ -16,17 +21,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@SpringBootTest
+@Transactional
 public class OfferCalculatorTest {
 
-    private InMemoryProductDetailsProvider productDetails;
+    @Autowired
+    ProductCatalogServiceImpl productCatalogService;
 
-    @BeforeEach
-    void setUp() {
-        this.productDetails = new InMemoryProductDetailsProvider();
-    }
+
     @Test
     void zeroOfferForEmptyItems() {
-        OfferCalculator offerCalculator = new OfferCalculator(productDetails);
+        OfferCalculator offerCalculator = new OfferCalculator(productCatalogService);
 
         Offer offer = offerCalculator.calculateOffer(Collections.emptyList());
 
@@ -35,11 +40,14 @@ public class OfferCalculatorTest {
 
     @Test
     public void itCreateOfferBasedOnCartItems() {
-        String product1 = thereIsProduct("Lego set 1", BigDecimal.valueOf(10.10));
-        String product2 = thereIsProduct("Lego set 2", BigDecimal.valueOf(20.10));
+        Product product1 = thereIsProduct();
+        Product product2 = thereIsSecondProduct();
+        var product1ID = product1.getId();
+        var product2ID = product2.getId();
+
         List<CartLine> cartItems = Arrays.asList(
-                new CartLine(product1, 2),
-                new CartLine(product2, 1)
+                new CartLine(product1ID, 2),
+                new CartLine(product2ID, 1)
         );
 
         OfferCalculator offerCalculator = thereIsOfferCalculator();
@@ -51,14 +59,31 @@ public class OfferCalculatorTest {
     }
 
     private OfferCalculator thereIsOfferCalculator() {
-        return new OfferCalculator(productDetails);
+        return new OfferCalculator(productCatalogService);
     }
 
-    private String thereIsProduct(String name, BigDecimal price) {
-        String id = UUID.randomUUID().toString();
-        this.productDetails.add(new ProductDetails(id, name, price));
-        return id;
+    private Product thereIsProduct() {
+        Product product = new Product(
+                UUID.randomUUID(),
+                "Test name",
+                "Test description",
+                BigDecimal.valueOf(10.1)
+        );
+
+        productCatalogService.addProduct(product);
+        return product;
     }
 
+    private Product thereIsSecondProduct() {
+        Product product = new Product(
+                UUID.randomUUID(),
+                "Test name",
+                "Test description",
+                BigDecimal.valueOf(20.1)
+        );
+
+        productCatalogService.addProduct(product);
+        return product;
+    }
 
 }

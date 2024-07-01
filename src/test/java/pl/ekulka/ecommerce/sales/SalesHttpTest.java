@@ -8,11 +8,14 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import pl.ekulka.ecommerce.catalog.model.Product;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogTemp;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,17 +28,25 @@ public class SalesHttpTest {
     private int port;
 
     @Autowired
-    ProductCatalogTemp catalog;
-    
-    private String thereIsExampleProduct(String name, BigDecimal price) {
-        var id = catalog.addProduct(name, "Example Product",price);
-        return id;
+    ProductCatalogServiceImpl catalog;
+
+    private Product thereIsProduct() {
+        Product product = new Product(
+                UUID.randomUUID(),
+                "Test name",
+                "Test description",
+                BigDecimal.valueOf(100)
+        );
+
+        catalog.addProduct(product);
+        return product;
     }
 
     @Test
     void itAllowToAcceptOffer() {
         //ARRANGE
-        String productId = thereIsExampleProduct("Example Product", BigDecimal.valueOf(100));
+        Product product = thereIsProduct();
+        String productId = product.getId();
 
         //ACT
         //add product to cart

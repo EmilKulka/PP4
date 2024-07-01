@@ -1,6 +1,12 @@
 package pl.ekulka.ecommerce.sales;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import pl.ekulka.ecommerce.catalog.model.Product;
+import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
@@ -8,22 +14,26 @@ import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
 import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
 import pl.ekulka.ecommerce.sales.reservation.SpyPaymentGateway;
+import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@SpringBootTest
+@Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class SalesTest {
 
-    private InMemoryProductDetailsProvider productDetails;
+    @Autowired
+    SalesFacade sales;
 
-    @BeforeEach
-    void setUp() {
-        this.productDetails = new InMemoryProductDetailsProvider();
-    }
+    @Autowired
+    ProductCatalogServiceImpl productRepository;
+
+
     @Test
     void itShowsOffer(){
-        SalesFacade sales = thereIsSAlesFacade();
         String customerId = thereIsExampleCustomer("Emil");
 
         Offer offer = sales.getCurrentOffer(customerId);
@@ -36,24 +46,15 @@ public class SalesTest {
         return id;
     }
 
-    private SalesFacade thereIsSAlesFacade() {
-        return new SalesFacade(
-                new InMemoryCartStorage(),
-                new OfferCalculator(productDetails),
-                new SpyPaymentGateway(),
-                new ReservationRepositoryTemp()
-        );
-    }
+
 
     @Test
     void itAllowsToAddProductToCart(){
         var customerId = thereIsExampleCustomer("Emil");
-        var product = thereIsProduct("product", BigDecimal.valueOf(10));
+        var productID = thereIsProduct().getId();
 
 
-        SalesFacade sales = thereIsSAlesFacade();
-
-        sales.addToCart(customerId, product);
+        sales.addToCart(customerId, productID);
 
         Offer offer = sales.getCurrentOffer(customerId);
         assertEquals(BigDecimal.valueOf(10), offer.getTotal());
@@ -64,13 +65,12 @@ public class SalesTest {
     @Test
     void itAllowsToAddMultipleProductsToCart(){
         var customerId = thereIsExampleCustomer("Emil");
-        var productA = thereIsProduct("product a", BigDecimal.valueOf(10));
-        var productB = thereIsProduct("product b", BigDecimal.valueOf(20));
+        var productAID = thereIsProduct().getId();
+        var productBID = thereIsSecondProduct().getId();
 
-        SalesFacade sales = thereIsSAlesFacade();
 
-        sales.addToCart(customerId, productA);
-        sales.addToCart(customerId, productB);
+        sales.addToCart(customerId, productAID);
+        sales.addToCart(customerId, productBID);
 
         Offer offer = sales.getCurrentOffer(customerId);
         assertEquals(BigDecimal.valueOf(30), offer.getTotal());
@@ -82,13 +82,12 @@ public class SalesTest {
     void itDoesNotShareCustomersCarts(){
         var customerA = thereIsExampleCustomer("Emil");
         var customerB = thereIsExampleCustomer("XYZ");
-        var productA = thereIsProduct("product a", BigDecimal.valueOf(10));
-        var productB = thereIsProduct("product b", BigDecimal.valueOf(20));
+        var productAID = thereIsProduct().getId();
+        var productBID = thereIsSecondProduct().getId();
 
-        SalesFacade sales = thereIsSAlesFacade();
 
-        sales.addToCart(customerA, productA);
-        sales.addToCart(customerB, productB);
+        sales.addToCart(customerA, productAID);
+        sales.addToCart(customerB, productBID);
 
         Offer offerA = sales.getCurrentOffer(customerA);
         assertEquals(BigDecimal.valueOf(10), offerA.getTotal());
@@ -100,23 +99,32 @@ public class SalesTest {
 
 
 
-    private String thereIsProduct(String name, BigDecimal price) {
-        String id = UUID.randomUUID().toString();
-        this.productDetails.add(new ProductDetails(
-               id,
-               name,
-               price
-        ));
-        return id;
+    private Product thereIsProduct() {
+        Product product = new Product(
+                UUID.randomUUID(),
+                "Test name",
+                "Test description",
+                BigDecimal.valueOf(10)
+        );
+
+        productRepository.addProduct(product);
+        return product;
+    }
+
+    private Product thereIsSecondProduct() {
+        Product product = new Product(
+                UUID.randomUUID(),
+                "Test name",
+                "Test description",
+                BigDecimal.valueOf(20)
+        );
+
+        productRepository.addProduct(product);
+        return product;
     }
 
     @Test
     void itAllowsToRemoveProductFromCart(){
 
     }
-
-    @Test
-    void itAllowsToAcceptOffer(){
-    }
-
 }

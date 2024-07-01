@@ -46,7 +46,7 @@ public class ReservationServiceIntegrationTest {
 
     private ClientDetails thereIsClient() {
         return new ClientDetails(
-                "2",
+                "1",
                 "John",
                 "Doe",
                 "john.doe@example.com"

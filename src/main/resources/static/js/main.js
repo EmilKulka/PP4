@@ -1,6 +1,6 @@
 //API CONTEXT
 getProducts = () => {
-  return fetch("/api/products")
+  return fetch("/api/productsDB")
     .then(response => response.json());
 }
 
