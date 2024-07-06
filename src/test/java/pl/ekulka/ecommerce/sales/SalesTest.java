@@ -1,20 +1,13 @@
 package pl.ekulka.ecommerce.sales;
 import jakarta.transaction.Transactional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
-import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.Offer;
-import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
-import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
-import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
-import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
-import pl.ekulka.ecommerce.sales.reservation.SpyPaymentGateway;
-import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;

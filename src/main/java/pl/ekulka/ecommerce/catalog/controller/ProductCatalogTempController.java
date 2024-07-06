@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 public class ProductCatalogTempController {
-
     ProductCatalogTemp catalog;
 
     public ProductCatalogTempController(ProductCatalogTemp catalog) {

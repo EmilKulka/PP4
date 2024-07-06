@@ -10,7 +10,6 @@ import pl.ekulka.ecommerce.sales.reservation.repository.ClientDetailsRepository;
 import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepository;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 import java.util.UUID;
 
 @Configuration

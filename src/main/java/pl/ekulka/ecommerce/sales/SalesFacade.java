@@ -11,9 +11,7 @@ import pl.ekulka.ecommerce.infrastructure.PaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
 import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
-import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
 import pl.ekulka.ecommerce.sales.reservation.service.ReservationService;
-import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
 import java.util.UUID;
 

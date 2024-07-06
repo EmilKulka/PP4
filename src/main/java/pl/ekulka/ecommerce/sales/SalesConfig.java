@@ -1,6 +1,5 @@
 package pl.ekulka.ecommerce.sales;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -10,7 +9,6 @@ import pl.ekulka.ecommerce.payu.PayU;
 import pl.ekulka.ecommerce.payu.PayUCredentials;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
-import pl.ekulka.ecommerce.sales.productdetails.ProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
 @Configuration
@@ -26,7 +24,7 @@ public class SalesConfig {
     }
 
     @Bean
-    SalesFacade createSales(ProductDetailsProvider productDetailsProvider) {
+    SalesFacade createSales() {
         return new SalesFacade(
                 new InMemoryCartStorage(),
                 new OfferCalculator(productCatalogService),

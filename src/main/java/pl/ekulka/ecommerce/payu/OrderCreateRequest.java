@@ -4,8 +4,6 @@ import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,10 +36,10 @@ public class OrderCreateRequest {
                 )
                 .setProducts(products.getLines().stream()
                         .map(lineItem -> new Product(
-                                "Lorem Ipsum",
-                                lineItem.getPrice().intValue(),
-                                lineItem.getQuantity()
-                        )
+                                        "Lorem Ipsum",
+                                        lineItem.getPrice().intValue(),
+                                        lineItem.getQuantity()
+                                )
                         )
                         .collect(Collectors.toList())
                 );

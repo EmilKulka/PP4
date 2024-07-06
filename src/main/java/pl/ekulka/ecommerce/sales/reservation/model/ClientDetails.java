@@ -1,8 +1,6 @@
 package pl.ekulka.ecommerce.sales.reservation.model;
 
 import jakarta.persistence.*;
-import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
-
 import java.util.List;
 
 @Entity

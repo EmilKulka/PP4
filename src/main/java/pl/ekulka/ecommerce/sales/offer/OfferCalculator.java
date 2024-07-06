@@ -6,8 +6,6 @@ import java.math.BigDecimal;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.sales.cart.CartLine;
-import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
-import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;

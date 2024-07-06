@@ -1,7 +1,5 @@
 package pl.ekulka.ecommerce.catalog.model;
 
-
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -31,9 +29,11 @@ public class Product {
             value = 0,
             message = "Price should not be less than 0"
     )
-    @NotNull(message = "Price cannot be null")
-    @Min(value = 0, message = "Price cannot be lower than 0")
-    @Column(precision =38,scale = 0)
+    @NotNull(
+            message = "Price cannot be null")
+    @Min(value = 0,
+            message = "Price cannot be lower than 0")
+    @Column(precision = 38, scale = 0)
     private BigDecimal price;
 
     public Product() {

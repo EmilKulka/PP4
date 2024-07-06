@@ -1,20 +1,14 @@
 package pl.ekulka.ecommerce.sales.reservation;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.sales.SalesFacade;
-import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
-import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
-import pl.ekulka.ecommerce.sales.productdetails.ProductDetails;
-import pl.ekulka.ecommerce.sales.productdetails.InMemoryProductDetailsProvider;
 import pl.ekulka.ecommerce.sales.reservation.model.ClientDetails;
 import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
-import pl.ekulka.ecommerce.sales.reservation.repository.ReservationRepositoryTemp;
 import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
 import java.math.BigDecimal;
