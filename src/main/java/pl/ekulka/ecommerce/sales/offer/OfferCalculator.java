@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.sales.cart.CartLine;
+import pl.ekulka.ecommerce.sales.offering.EveryNthProductDiscountPolicy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,17 @@ public class OfferCalculator {
 
         for(CartLine cartLine : cartLines) {
             offerLines.add(toOfferLine(cartLine));
+        }
+
+        return new Offer(offerLines, calculateOfferTotal(offerLines));
+    }
+
+    public Offer calculateOffer(List<CartLine> cartLines, EveryNthProductDiscountPolicy everyNthProductDiscountPolicy) {
+        List<OfferLine> offerLines = new ArrayList<>();
+
+        for(CartLine cartLine : cartLines) {
+            OfferLine offerLine = toOfferLine(cartLine);
+            offerLines.add(everyNthProductDiscountPolicy.apply(offerLine));
         }
 
         return new Offer(offerLines, calculateOfferTotal(offerLines));
