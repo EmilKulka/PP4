@@ -1,6 +1,6 @@
-package pl.ekulka.validator.product;
+package pl.ekulka.ecommerce.validator.product;
 
-import pl.ekulka.validator.FieldValidator;
+import pl.ekulka.ecommerce.validator.FieldValidator;
 
 public class NameValidator implements FieldValidator<String> {
     @Override

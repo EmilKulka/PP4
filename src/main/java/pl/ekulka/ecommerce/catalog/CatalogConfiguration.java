@@ -1,16 +1,13 @@
 package pl.ekulka.ecommerce.catalog;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
-import pl.ekulka.ecommerce.catalog.storage.ProductRepository;
-import pl.ekulka.validator.product.DescriptionValidator;
-import pl.ekulka.validator.product.NameValidator;
-import pl.ekulka.validator.product.PriceValidator;
+import pl.ekulka.ecommerce.validator.product.DescriptionValidator;
+import pl.ekulka.ecommerce.validator.product.NameValidator;
+import pl.ekulka.ecommerce.validator.product.PriceValidator;
 
 @Configuration
-public class CatalogConfig {
+public class CatalogConfiguration {
     @Bean
     public NameValidator nameValidator() {
         return new NameValidator();

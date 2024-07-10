@@ -3,9 +3,9 @@ package pl.ekulka.ecommerce.catalog.service;
 import org.springframework.stereotype.Service;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.storage.ProductRepository;
-import pl.ekulka.validator.product.DescriptionValidator;
-import pl.ekulka.validator.product.NameValidator;
-import pl.ekulka.validator.product.PriceValidator;
+import pl.ekulka.ecommerce.validator.product.DescriptionValidator;
+import pl.ekulka.ecommerce.validator.product.NameValidator;
+import pl.ekulka.ecommerce.validator.product.PriceValidator;
 
 import java.util.List;
 import java.util.Optional;
