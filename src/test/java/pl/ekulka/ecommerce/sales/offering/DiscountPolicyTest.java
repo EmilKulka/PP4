@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.sales.cart.CartLine;
+import pl.ekulka.ecommerce.sales.offer.EveryNthProductDiscountPolicy;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
 

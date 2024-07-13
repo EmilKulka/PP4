@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.sales.offering;
+package pl.ekulka.ecommerce.sales.offer;
 
 import pl.ekulka.ecommerce.sales.offer.OfferLine;
 
@@ -20,12 +20,12 @@ public class EveryNthProductDiscountPolicy {
         double totalFreeProducts = Math.floor((double) offerLine.getQuantity() / (double) quantityThreshold);
 
         BigDecimal lineTotalAfterDiscount = offerLine
-                .getUnitprice()
+                .getUnitPrice()
                 .multiply(BigDecimal.valueOf(offerLine.getQuantity()))
-                .subtract(BigDecimal.valueOf(totalFreeProducts).multiply(offerLine.getUnitprice()))
+                .subtract(BigDecimal.valueOf(totalFreeProducts).multiply(offerLine.getUnitPrice()))
                 .setScale(0);
 
-        return new OfferLine(offerLine.getProductId(), offerLine.getName(), offerLine.getUnitprice(), offerLine.getQuantity(), lineTotalAfterDiscount);
+        return new OfferLine(offerLine.getProductId(), offerLine.getName(), offerLine.getUnitPrice(), offerLine.getQuantity(), lineTotalAfterDiscount);
     }
 
     private boolean isApplicable(OfferLine offerLine) {

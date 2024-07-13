@@ -5,14 +5,14 @@ import java.math.BigDecimal;
 public class OfferLine {
     private final String productId;
     private final String name;
-    private final BigDecimal Unitprice;
+    private final BigDecimal unitPrice;
     private final int quantity;
     private final BigDecimal total;
 
     public OfferLine(String productId, String name, BigDecimal unitPrice, int quantity, BigDecimal total) {
         this.productId = productId;
         this.name = name;
-        this.Unitprice = unitPrice;
+        this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.total = total;
     }
@@ -25,8 +25,8 @@ public class OfferLine {
         return name;
     }
 
-    public BigDecimal getUnitprice() {
-        return Unitprice;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
     public int getQuantity() {
