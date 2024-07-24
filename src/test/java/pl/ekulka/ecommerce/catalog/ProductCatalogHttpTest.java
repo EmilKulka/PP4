@@ -24,7 +24,7 @@ public class ProductCatalogHttpTest {
     void itLoadsProductsFromRepository() {
         String url = String.format("http://localhost:%s/%s",
                 port,
-                "api/productsDB"
+                "api/products"
         );
 
         ResponseEntity<Product[]> response = http.getForEntity(url, Product[].class);

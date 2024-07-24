@@ -31,21 +31,19 @@ public class SalesHttpTest {
 
     private Product thereIsProduct() {
         Product product = new Product(
-                UUID.randomUUID(),
                 "Test name",
                 "Test description",
                 BigDecimal.valueOf(100)
         );
 
-        catalog.addProduct(product);
-        return product;
+        return catalog.createProduct(product);
     }
 
     @Test
     void itAllowToAcceptOffer() {
         //ARRANGE
         Product product = thereIsProduct();
-        String productId = product.getId();
+        UUID productId = product.getId();
 
         //ACT
         //add product to cart

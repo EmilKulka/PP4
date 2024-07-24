@@ -76,7 +76,7 @@ public class SalesFacade {
     }
 
 
-    public void addToCart(String customerId, String productId) {
+    public void addToCart(String customerId, UUID productId) {
         Cart cart = loadCartForCustomer(customerId);
 
         cart.addProduct(productId);

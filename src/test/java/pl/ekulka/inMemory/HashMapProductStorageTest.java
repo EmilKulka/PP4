@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.catalog;
+package pl.ekulka.inMemory;
 
 import org.junit.jupiter.api.Test;
 import pl.ekulka.ecommerce.catalog.model.Product;
@@ -36,7 +36,7 @@ public class HashMapProductStorageTest {
     }
 
     private Product thereIsExampleProduct() {
-        return new Product(UUID.randomUUID(), "test-it", "test", BigDecimal.valueOf(10));
+        return new Product( "test-it", "test", BigDecimal.valueOf(10));
     }
 
     @Test

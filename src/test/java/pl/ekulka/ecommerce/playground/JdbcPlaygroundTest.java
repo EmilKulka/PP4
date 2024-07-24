@@ -70,10 +70,10 @@ public class JdbcPlaygroundTest {
         var insertSql = "insert into `product_catalog__products` (id, name, price)" +
                 "values (?,?,?)" +
                 ";";
-        var product = new Product(UUID.randomUUID(), "my product", "xyz", BigDecimal.valueOf(10));
+        var product = new Product("my product", "xyz", BigDecimal.valueOf(10));
 
 
-        jdbcTemplate.update(insertSql, product.getId(), product.getName(), product.getPrice());
+        jdbcTemplate.update(insertSql, UUID.randomUUID(), product.getName(), product.getPrice());
 
 
         var countSql = "select count(*) from `product_catalog__products`";
@@ -97,7 +97,6 @@ public class JdbcPlaygroundTest {
                 new Object[] {"product_1"},
                 (rs,i) -> {
                     var myResult = new Product(
-                            UUID.randomUUID(),
                             rs.getString("name"),
                             rs.getString("name"),
                             rs.getBigDecimal("price")

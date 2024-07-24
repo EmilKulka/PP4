@@ -1,52 +1,38 @@
 package pl.ekulka.ecommerce.catalog.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
 @Entity
-@Table(name = "Products")
 public class Product {
     @Id
-    @Column(name = "product_id")
-    private String id;
-    @NotNull(
-            message = "Name cannot be null")
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
-    @Size(
-            min = 1,
-            max = 200,
-            message = "Description must be between 1 and 200 characters")
-    @NotNull(
-            message = "Description cannot be null")
     private String description;
-    @Min(
-            value = 0,
-            message = "Price should not be less than 0"
-    )
-    @NotNull(
-            message = "Price cannot be null")
-    @Min(value = 0,
-            message = "Price cannot be lower than 0")
-    @Column(precision = 38, scale = 0)
+    @Column(
+            precision = 38,
+            scale = 0)
     private BigDecimal price;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     public Product() {
     }
 
-    public Product(UUID id, String name, String description, BigDecimal price) {
-        this.id = id.toString();
+    public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.createdAt = LocalDateTime.now();
+        this.modifiedAt = null;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -66,11 +52,23 @@ public class Product {
         return description;
     }
 
-    public void changeName(String name) {
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void changeDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
     }
 }

@@ -61,26 +61,21 @@ public class OfferCalculatorTest {
 
     private Product thereIsProduct() {
         Product product = new Product(
-                UUID.randomUUID(),
                 "Test name",
                 "Test description",
                 BigDecimal.valueOf(10.1)
         );
-
-        productCatalogService.addProduct(product);
-        return product;
+        return productCatalogService.createProduct(product);
     }
 
     private Product thereIsSecondProduct() {
         Product product = new Product(
-                UUID.randomUUID(),
                 "Test name",
                 "Test description",
                 BigDecimal.valueOf(20.1)
         );
 
-        productCatalogService.addProduct(product);
-        return product;
+        return productCatalogService.createProduct(product);
     }
 
 }

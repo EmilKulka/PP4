@@ -1,56 +1,41 @@
 package pl.ekulka.ecommerce.catalog.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.storage.ProductRepository;
-import pl.ekulka.ecommerce.validator.product.DescriptionValidator;
-import pl.ekulka.ecommerce.validator.product.NameValidator;
-import pl.ekulka.ecommerce.validator.product.PriceValidator;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
+
 
 @Service
-public class ProductCatalogServiceImpl implements ProductCatalogService{
+public class ProductCatalogServiceImpl implements ProductCatalogService {
     private final ProductRepository repository;
-    private final NameValidator nameValidator;
-    private final DescriptionValidator descriptionValidator;
-    private final PriceValidator priceValidator;
 
-    public ProductCatalogServiceImpl(ProductRepository repository, NameValidator nameValidator, DescriptionValidator descriptionValidator, PriceValidator priceValidator) {
+    public ProductCatalogServiceImpl(ProductRepository repository) {
         this.repository = repository;
-        this.nameValidator = nameValidator;
-        this.descriptionValidator = descriptionValidator;
-        this.priceValidator = priceValidator;
     }
 
-    public List<Product> allProducts() {
+    public List<Product> getProducts() {
         return repository.findAll();
     }
 
-    public void addProduct(Product newProduct) {
-        if (!nameValidator.isValid(newProduct.getName())) {
-            throw new IllegalStateException(
-                    "Name cannot be null"
-            );
-        }
-        if (!descriptionValidator.isValid(newProduct.getDescription())) {
-            throw new IllegalStateException(
-                    "Description must be between 1 and 200 characters"
-            );
-        }
-        if (!priceValidator.isValid(newProduct.getPrice())) {
-            throw new IllegalStateException(
-                    "Price cannot be lower than 0"
-            );
-        }
-        repository.save(newProduct);
+    public Product createProduct(Product newProduct) {
+        return repository.save(newProduct);
     }
 
-    public Optional<Product> getProductById(String id) {
-        return Optional.ofNullable(repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product with ID " + id + " not found")));
+    public Product getProductById(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product with id " + id + " not found"));
     }
 
+    public void updateProduct(Product product) {
+        repository.save(product);
+    }
 
+    @Transactional
+    public void deleteProduct(UUID id) {
+        repository.deleteProductById(id);
+    }
 }

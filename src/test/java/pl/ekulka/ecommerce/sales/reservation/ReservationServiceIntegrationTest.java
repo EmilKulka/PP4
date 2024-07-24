@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.repositories.reservationRepository;
+package pl.ekulka.ecommerce.sales.reservation;
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import pl.ekulka.ecommerce.sales.reservation.model.ClientDetails;
 import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
-import pl.ekulka.ecommerce.sales.reservation.service.ClientDetailsServiceImpl;
 import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
 import java.math.BigDecimal;

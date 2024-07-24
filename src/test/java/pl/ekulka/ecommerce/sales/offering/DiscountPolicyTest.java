@@ -61,15 +61,13 @@ public class DiscountPolicyTest {
         );
     }
 
-    private String thereIsProductID() {
+    private UUID thereIsProductID() {
         Product product = new Product(
-                UUID.randomUUID(),
                 "Example Name",
                 "Example Description",
                 BigDecimal.valueOf(100)
         );
-        productCatalogService.addProduct(product);
-        return product.getId();
+        return productCatalogService.createProduct(product).getId();
     }
 
 

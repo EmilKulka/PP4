@@ -27,7 +27,6 @@ public class DbInit implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
         productRepository.save(new Product(
-                UUID.randomUUID(),
                 "Example Product",
                 "Example description",
                 BigDecimal.valueOf(100)));

@@ -15,7 +15,7 @@ public class ProductCatalogTempController {
         this.catalog = catalog;
     }
 
-    @GetMapping("api/products")
+    @GetMapping("/api/in-memory/products")
     List<Product> allProducts() {
         return catalog.allProducts();
     }

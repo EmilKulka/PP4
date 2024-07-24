@@ -6,6 +6,8 @@ import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 
+import java.util.UUID;
+
 @RestController
 public class SalesController {
     SalesFacade sales;
@@ -21,7 +23,7 @@ public class SalesController {
     }
 
     @PostMapping("/api/add-to-cart/{productId}")
-    void addToCart(@PathVariable(name = "productId") String productId) {
+    void addToCart(@PathVariable(name = "productId") UUID productId) {
         String customerId = getCurrentCustomerId();
         sales.addToCart(customerId, productId);
     };

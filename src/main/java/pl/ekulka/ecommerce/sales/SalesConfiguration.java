@@ -14,8 +14,7 @@ import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 @Configuration
 public class SalesConfiguration {
 
-    final
-    ProductCatalogServiceImpl productCatalogService;
+    final ProductCatalogServiceImpl productCatalogService;
     final ReservationServiceImpl reservationService;
 
     public SalesConfiguration(ProductCatalogServiceImpl productCatalogService, ReservationServiceImpl reservationService) {

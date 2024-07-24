@@ -94,26 +94,23 @@ public class SalesTest {
 
     private Product thereIsProduct() {
         Product product = new Product(
-                UUID.randomUUID(),
                 "Test name",
                 "Test description",
                 BigDecimal.valueOf(10)
         );
 
-        productRepository.addProduct(product);
-        return product;
+        return productRepository.createProduct(product);
     }
 
     private Product thereIsSecondProduct() {
         Product product = new Product(
-                UUID.randomUUID(),
                 "Test name",
                 "Test description",
                 BigDecimal.valueOf(20)
         );
 
-        productRepository.addProduct(product);
-        return product;
+        productRepository.createProduct(product);
+        return productRepository.createProduct(product);
     }
 
     @Test

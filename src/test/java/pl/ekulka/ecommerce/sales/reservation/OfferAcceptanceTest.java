@@ -96,13 +96,12 @@ public class OfferAcceptanceTest {
 
     private Product thereIsProduct() {
         Product product = new Product(
-                UUID.randomUUID(),
                 "Test name",
                 "Test description",
                 BigDecimal.valueOf(10)
         );
 
-        productCatalogService.addProduct(product);
+        productCatalogService.createProduct(product);
         return product;
     }
 

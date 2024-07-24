@@ -1,15 +1,17 @@
 package pl.ekulka.ecommerce.sales.cart;
 
+import java.util.UUID;
+
 public class CartLine {
-    String productId;
+    UUID productId;
     int quantity;
 
-    public CartLine(String productId, int quantity) {
+    public CartLine(UUID productId, int quantity) {
         this.productId = productId;
         this.quantity = quantity;
     }
 
-    public String getProductId() {
+    public UUID getProductId() {
         return productId;
     }
 

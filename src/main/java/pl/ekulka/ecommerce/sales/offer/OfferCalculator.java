@@ -41,7 +41,7 @@ public class OfferCalculator {
     }
 
     public OfferLine toOfferLine(CartLine cartLine) {
-        Product productDetails = productCatalogService.getProductById(cartLine.getProductId()).get();
+        Product productDetails = productCatalogService.getProductById(cartLine.getProductId());
 
         BigDecimal lineTotal = productDetails.getPrice().multiply(BigDecimal.valueOf(cartLine.getQuantity()));
 

@@ -4,9 +4,10 @@ import pl.ekulka.ecommerce.catalog.model.Product;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class HashMapProductStorage implements ProductStorage {
-    HashMap<String, Product> products;
+    HashMap<UUID, Product> products;
 
     public HashMapProductStorage() {
         this.products = new HashMap<>();

@@ -1,4 +1,4 @@
-package pl.ekulka.ecommerce.repositories.catalogRepository;
+package pl.ekulka.ecommerce.catalog;
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @SpringBootTest
@@ -30,35 +29,35 @@ public class ProductServiceIntegrationTest {
         Product product = thereIsProduct(
                 "Example Name",
                 "Example Description",
-                BigDecimal.valueOf(100));
-        String productID = product.getId();
+                BigDecimal.valueOf(100)
+        );
+        UUID productID = service.createProduct(product).getId();
         String productName = product.getName();
         String productDescription = product.getDescription();
         BigDecimal productPrice = product.getPrice();
 
         // When
-        service.addProduct(product);
-        List<Product> allProducts = service.allProducts();
-        Optional<Product> foundProduct = service.getProductById(productID);
+        List<Product> allProducts = service.getProducts();
+        Product foundProduct = service.getProductById(productID);
 
         // Then
-        assertThat(productID).isEqualTo(foundProduct.get().getId());
-        assertThat(productName).isEqualTo(foundProduct.get().getName());
-        assertThat(productDescription).isEqualTo(foundProduct.get().getDescription());
-        assertThat(productPrice).isEqualTo(foundProduct.get().getPrice());
+        assertThat(productID).isEqualTo(foundProduct.getId());
+        assertThat(productName).isEqualTo(foundProduct.getName());
+        assertThat(productDescription).isEqualTo(foundProduct.getDescription());
+        assertThat(productPrice).isEqualTo(foundProduct.getPrice());
         assertThat(allProducts).hasSize(2); // DB initialized with 1 product already
     }
 
     @Test
     void itThrowsExceptionWhenProductNotFoundByID() {
-        assertThatThrownBy(() -> service.getProductById("fake ID"))
+        var randomId = UUID.randomUUID();
+        assertThatThrownBy(() -> service.getProductById(randomId))
                 .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Product with ID fake ID not found");
+                .hasMessageContaining("Product with id " + randomId + " not found");
     }
 
     private Product thereIsProduct(String name, String description, BigDecimal price) {
-        UUID id = UUID.randomUUID();
-        return new Product(id,
+        return new Product(
                 name,
                 description,
                 price);

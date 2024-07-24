@@ -3,12 +3,12 @@ package pl.ekulka.ecommerce.catalog.service;
 import pl.ekulka.ecommerce.catalog.model.Product;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 public interface ProductCatalogService {
-    List<Product> allProducts();
+    List<Product> getProducts();
 
-    void addProduct(Product newProduct);
+    Product createProduct(Product newProduct);
 
-    Optional<Product> getProductById(String id);
+    Product getProductById(UUID id);
 }
