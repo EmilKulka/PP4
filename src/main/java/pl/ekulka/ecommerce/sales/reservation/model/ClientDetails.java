@@ -4,15 +4,13 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Client_Details")
 public class ClientDetails {
     @Id
-    @Column(name = "customer_id")
-    private String customerId;
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "id")
     private List<Reservation> reservations;
 
     public ClientDetails() {
@@ -21,14 +19,14 @@ public class ClientDetails {
 
     public ClientDetails(String customerId, String firstName, String lastName, String email) {
 
-        this.customerId = customerId;
+        this.id = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
     public String getCustomerId() {
-        return customerId;
+        return id;
     }
 
     public String getFirstName() {

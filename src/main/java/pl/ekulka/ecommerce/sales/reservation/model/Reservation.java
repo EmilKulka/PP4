@@ -8,13 +8,12 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "Reservations")
 public class Reservation {
     @Id
     private String reservationId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "id", nullable = false)
     private ClientDetails customerId;
     @Column(precision =38,scale = 0)
     private BigDecimal total;

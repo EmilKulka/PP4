@@ -1,7 +1,11 @@
 //API CONTEXT
 getProducts = () => {
   return fetch("/api/products")
-    .then(response => response.json());
+    .then(response => response.json())
+      .then(data => {
+          const products = data._embedded && data._embedded.productList ? data._embedded.productList : [];
+          return products;
+      });
 }
 
 getCurrentOffer = () => {

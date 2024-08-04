@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import pl.ekulka.ecommerce.catalog.model.Product;
 import pl.ekulka.ecommerce.catalog.storage.ProductRepository;
+import pl.ekulka.ecommerce.catalog.exception.ProductNotFoundException;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,15 +28,21 @@ public class ProductCatalogServiceImpl implements ProductCatalogService {
 
     public Product getProductById(UUID id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product with id " + id + " not found"));
+                .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " not found"));
     }
 
-    public void updateProduct(Product product) {
-        repository.save(product);
+    public Product updateProduct(Product product) {
+        if(!repository.existsById(product.getId())) {
+            throw new ProductNotFoundException("Product with id " + product.getId() + "not found");
+        }
+        return repository.save(product);
     }
 
     @Transactional
     public void deleteProduct(UUID id) {
+        if(!repository.existsById(id)) {
+            throw new ProductNotFoundException("Product with id " + id + " not found");
+        }
         repository.deleteProductById(id);
     }
 }

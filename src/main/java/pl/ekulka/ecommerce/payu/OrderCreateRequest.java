@@ -36,7 +36,7 @@ public class OrderCreateRequest {
                 )
                 .setProducts(products.getLines().stream()
                         .map(lineItem -> new Product(
-                                        "Lorem Ipsum",
+                                        lineItem.getName(),
                                         lineItem.getUnitPrice().intValue(),
                                         lineItem.getQuantity()
                                 )

@@ -1,6 +1,5 @@
 package pl.ekulka.ecommerce.sales.cart;
 
-import pl.ekulka.ecommerce.sales.cart.Cart;
 
 import java.util.HashMap;
 import java.util.Map;

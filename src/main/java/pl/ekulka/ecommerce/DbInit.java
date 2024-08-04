@@ -28,7 +28,7 @@ public class DbInit implements CommandLineRunner {
     public void run(String... args) throws Exception {
         productRepository.save(new Product(
                 "Example Product",
-                "Example description",
+                "Example Description",
                 BigDecimal.valueOf(100)));
 
 

@@ -83,9 +83,15 @@
             <version>3.3.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-hateoas -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-hateoas</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+
 
     </dependencies>
-
 
 
 </project>

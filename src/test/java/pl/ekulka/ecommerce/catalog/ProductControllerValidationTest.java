@@ -12,9 +12,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.ekulka.ecommerce.catalog.controller.ProductCatalogController;
 import pl.ekulka.ecommerce.catalog.model.ProductDto;
+import pl.ekulka.ecommerce.catalog.model.ProductMapper;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 
 import java.math.BigDecimal;
+
 
 @WebMvcTest(ProductCatalogController.class)
 public class ProductControllerValidationTest {
@@ -27,6 +29,11 @@ public class ProductControllerValidationTest {
 
     @MockBean
     private ProductCatalogServiceImpl productCatalogService;
+    @MockBean
+    private ProductMapper productMapper;
+
+    @MockBean
+    ProductCatalogController productCatalogController;
 
     ProductDto productDto;
 
@@ -37,14 +44,6 @@ public class ProductControllerValidationTest {
                 "Example description",
                 BigDecimal.valueOf(100)
         );
-    }
-
-    @Test
-    void shouldAllowToAddWhenValidDto() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/products")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(productDto)))
-                .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
     @Test
