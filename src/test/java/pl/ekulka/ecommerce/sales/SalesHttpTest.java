@@ -81,6 +81,8 @@ public class SalesHttpTest {
 
 
 
+
+
         assertEquals(addProductResponse.getStatusCode(), HttpStatus.OK);
         assertEquals(reservationDetailResponseEntity.getStatusCode(), HttpStatus.OK);
         assertNotNull(reservationDetailResponseEntity.getBody().getReservationId());

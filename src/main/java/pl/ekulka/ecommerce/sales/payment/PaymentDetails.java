@@ -1,7 +1,7 @@
 package pl.ekulka.ecommerce.sales.payment;
 
 public class PaymentDetails {
-    private final String url;
+    private final String paymentUrl;
     private final String reservationId;
     private final String paymentId;
 
@@ -14,12 +14,12 @@ public class PaymentDetails {
     }
 
     public PaymentDetails(String url, String reservationId, String paymentId) {
-        this.url = url;
+        this.paymentUrl = url;
         this.reservationId = reservationId;
         this.paymentId = paymentId;
     }
 
     public String getPaymentUrl() {
-        return url;
+        return paymentUrl;
     }
 }

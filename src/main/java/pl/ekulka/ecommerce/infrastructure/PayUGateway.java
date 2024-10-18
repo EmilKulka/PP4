@@ -1,16 +1,14 @@
 package pl.ekulka.ecommerce.infrastructure;
 
-import pl.ekulka.ecommerce.payu.OrderCreateRequest;
-import pl.ekulka.ecommerce.payu.OrderCreateResponse;
-import pl.ekulka.ecommerce.payu.PayU;
+import pl.ekulka.ecommerce.payu.PaymentRequest;
+import pl.ekulka.ecommerce.payu.PaymentResponse;
+import pl.ekulka.ecommerce.payu.PayUApiClient;
 import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
 
-import java.util.UUID;
-
 public class PayUGateway implements PaymentGateway {
-    private final PayU payU;
-    public PayUGateway(PayU payU) {
+    private final PayUApiClient payU;
+    public PayUGateway(PayUApiClient payU) {
         this.payU = payU;
     }
 
@@ -20,12 +18,7 @@ public class PayUGateway implements PaymentGateway {
     }
 
     @Override
-    public PaymentDetails registerPayment(OrderCreateRequest request) {
-        OrderCreateResponse response = payU.handle(request);
-        return new PaymentDetails(
-                response.getRedirectUri(),
-                request.getExtOrderId(),
-                UUID.randomUUID().toString()
-        );
+    public PaymentResponse registerPayment(PaymentRequest request) {
+        return payU.handlePaymentRequest(request);
     }
 }

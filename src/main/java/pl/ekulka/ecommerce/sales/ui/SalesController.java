@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @RestController
 public class SalesController {
-    SalesFacade sales;
+    private final SalesFacade sales;
 
     public SalesController(SalesFacade sales) {
         this.sales = sales;
@@ -31,8 +31,8 @@ public class SalesController {
     @PostMapping("/api/accept-offer")
     ReservationDetail acceptOffer(@RequestBody AcceptOfferRequest acceptOfferRequest) {
         String customerId = getCurrentCustomerId();
-        ReservationDetail reservationDetail = sales.acceptOfferPayU(customerId, acceptOfferRequest);
-        return  reservationDetail;
+        ReservationDetail reservationDetail = sales.acceptOffer(customerId, acceptOfferRequest);
+        return reservationDetail;
     }
 
     private String getCurrentCustomerId(){

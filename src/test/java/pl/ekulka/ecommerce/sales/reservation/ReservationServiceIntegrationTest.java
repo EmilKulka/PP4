@@ -25,19 +25,17 @@ public class ReservationServiceIntegrationTest {
     @Test
     void itAllowToAddReservationForGivenCustomer() {
         Reservation reservation = thereIsReservation();
-        String reservationID = reservation.getId();
         String clientID = reservation.getCustomerDetails().getCustomerId();
 
-        reservationService.add(reservation);
-        Optional<Reservation> loadedReservation = reservationService.load(reservationID);
+        Long id = reservationService.create(reservation).getId();
+        Optional<Reservation> loadedReservation = reservationService.load(id);
 
-        assertThat(loadedReservation.get().getId()).isEqualTo(reservationID);
+        assertThat(loadedReservation.get().getId()).isEqualTo(id);
         assertThat(loadedReservation.get().getCustomerDetails().getCustomerId()).isEqualTo(clientID);
     }
 
     private Reservation thereIsReservation() {
         return new Reservation(
-                UUID.randomUUID().toString(),
                 thereIsClient(),
                 BigDecimal.valueOf(100)
         );

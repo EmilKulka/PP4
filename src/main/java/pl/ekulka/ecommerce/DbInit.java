@@ -42,7 +42,6 @@ public class DbInit implements CommandLineRunner {
          clientRepository.save(client);
 
          reservationRepository.save(new Reservation(
-                 "1",
                  client,
                  BigDecimal.valueOf(100)
          ));

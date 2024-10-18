@@ -3,12 +3,14 @@ package pl.ekulka.ecommerce.payu;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OrderCreateRequest {
+public class PaymentRequest {
     String customerIp;
+    String continueUrl;
     String notifyUrl;
 
     String merchantPosId;
@@ -19,22 +21,23 @@ public class OrderCreateRequest {
     Buyer buyer;
     List<Product> products;
 
-    public static OrderCreateRequest of(String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total, Offer products) {
-        return new OrderCreateRequest()
+    public static PaymentRequest of(Long reservationId, AcceptOfferRequest acceptOfferRequest, Offer offer) {
+        return new PaymentRequest()
                 .setNotifyUrl("https://my.example.shop.ekulka.pl/api/order")
+                .setContinueUrl("http://localhost:8888")
                 .setCustomerIp("127.0.0.1")
                 .setMerchantPosId("300746")
-                .setDescription("Lorem ipsum")
+                .setDescription("[TEST] This is fake payment.")
                 .setCurrencyCode("PLN")
-                .setTotalAmount(total.toString())
-                .setExtOrderId(reservationId)
+                .setTotalAmount(offer.getTotal().toString())
+                .setExtOrderId(extOrderIdGenerator(reservationId))
                 .setBuyer(new Buyer()
                         .setLanguage("pl")
                         .setEmail(acceptOfferRequest.getEmail())
                         .setFirstName(acceptOfferRequest.getFirstName())
                         .setLastName(acceptOfferRequest.getLastName())
                 )
-                .setProducts(products.getLines().stream()
+                .setProducts(offer.getLines().stream()
                         .map(lineItem -> new Product(
                                         lineItem.getName(),
                                         lineItem.getUnitPrice().intValue(),
@@ -45,21 +48,36 @@ public class OrderCreateRequest {
                 );
     }
 
+    private static String extOrderIdGenerator(Long reservationId) {
+        return String.format("%s_%s",
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")),
+                reservationId.toString());
+    }
+
+
     public String getNotifyUrl() {
         return notifyUrl;
     }
 
-    public OrderCreateRequest setNotifyUrl(String notifyUrl) {
+    public PaymentRequest setNotifyUrl(String notifyUrl) {
         this.notifyUrl = notifyUrl;
         return this;
     }
 
+    public String getContinueUrl() {
+        return continueUrl;
+    }
+
+    public PaymentRequest setContinueUrl(String continueUrl) {
+        this.continueUrl = continueUrl;
+        return this;
+    }
 
     public String getCustomerIp() {
         return customerIp;
     }
 
-    public OrderCreateRequest setCustomerIp(String customerIp) {
+    public PaymentRequest setCustomerIp(String customerIp) {
         this.customerIp = customerIp;
         return this;
     }
@@ -68,7 +86,7 @@ public class OrderCreateRequest {
         return merchantPosId;
     }
 
-    public OrderCreateRequest setMerchantPosId(String merchantPosId) {
+    public PaymentRequest setMerchantPosId(String merchantPosId) {
         this.merchantPosId = merchantPosId;
         return this;
     }
@@ -77,7 +95,7 @@ public class OrderCreateRequest {
         return description;
     }
 
-    public OrderCreateRequest setDescription(String description) {
+    public PaymentRequest setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -86,7 +104,7 @@ public class OrderCreateRequest {
         return currencyCode;
     }
 
-    public OrderCreateRequest setCurrencyCode(String currencyCode) {
+    public PaymentRequest setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
         return this;
     }
@@ -95,7 +113,7 @@ public class OrderCreateRequest {
         return totalAmount;
     }
 
-    public OrderCreateRequest setTotalAmount(String totalAmount) {
+    public PaymentRequest setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
         return this;
     }
@@ -104,7 +122,7 @@ public class OrderCreateRequest {
         return extOrderId;
     }
 
-    public OrderCreateRequest setExtOrderId(String extOrderId) {
+    public PaymentRequest setExtOrderId(String extOrderId) {
         this.extOrderId = extOrderId;
         return this;
     }
@@ -113,7 +131,7 @@ public class OrderCreateRequest {
         return buyer;
     }
 
-    public OrderCreateRequest setBuyer(Buyer buyer) {
+    public PaymentRequest setBuyer(Buyer buyer) {
         this.buyer = buyer;
         return this;
     }
@@ -122,7 +140,7 @@ public class OrderCreateRequest {
         return products;
     }
 
-    public OrderCreateRequest setProducts(List<Product> products) {
+    public PaymentRequest setProducts(List<Product> products) {
         this.products = products;
         return this;
     }

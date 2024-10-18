@@ -6,7 +6,9 @@ import java.util.Optional;
 
 public interface ReservationService {
 
-    Optional<Reservation> load(String reservationId);
+    Optional<Reservation> load(Long reservationId);
 
-    void add(Reservation reservation);
+    Reservation create(Reservation reservation);
+
+     void setPayUOrderId(Long reservationId, String orderPauYOrderId);
 }

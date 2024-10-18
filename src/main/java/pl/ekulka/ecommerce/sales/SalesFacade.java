@@ -1,14 +1,14 @@
 package pl.ekulka.ecommerce.sales;
 
-import pl.ekulka.ecommerce.payu.OrderCreateRequest;
+import pl.ekulka.ecommerce.payu.PaymentRequest;
+import pl.ekulka.ecommerce.payu.PaymentResponse;
 import pl.ekulka.ecommerce.sales.cart.Cart;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
 import pl.ekulka.ecommerce.sales.offer.AcceptOfferRequest;
+import pl.ekulka.ecommerce.sales.offer.EveryNthProductDiscountPolicy;
 import pl.ekulka.ecommerce.sales.offer.Offer;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
-import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
 import pl.ekulka.ecommerce.infrastructure.PaymentGateway;
-import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
 import pl.ekulka.ecommerce.sales.reservation.model.Reservation;
 import pl.ekulka.ecommerce.sales.reservation.ReservationDetail;
 import pl.ekulka.ecommerce.sales.reservation.service.ReservationService;
@@ -19,60 +19,48 @@ public class SalesFacade {
     private final InMemoryCartStorage cartStorage;
     private final OfferCalculator offerCalculator;
     private final PaymentGateway paymentGateway;
-    private final ReservationService reservationRepository;
+    private final ReservationService reservationService;
+    private final EveryNthProductDiscountPolicy everyNthProductDiscountPolicy;
 
 
-    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationService reservationRepository) {
+    public SalesFacade(InMemoryCartStorage cartStorage, OfferCalculator offerCalculator, PaymentGateway paymentGateway, ReservationService reservationService, EveryNthProductDiscountPolicy everyNthProductDiscountPolicy) {
         this.cartStorage = cartStorage;
         this.offerCalculator = offerCalculator;
         this.paymentGateway = paymentGateway;
-        this.reservationRepository = reservationRepository;
+        this.reservationService = reservationService;
+        this.everyNthProductDiscountPolicy = everyNthProductDiscountPolicy;
     }
 
     public Offer getCurrentOffer(String customerId) {
         Cart cart = loadCartForCustomer(customerId);
 
-        Offer currentOffer = offerCalculator.calculateOffer(cart.getLines());
+        Offer currentOffer = offerCalculator.calculateOffer(cart.getLines(), everyNthProductDiscountPolicy);
 
         return currentOffer;
     }
 
+
     public ReservationDetail acceptOffer(String customerId, AcceptOfferRequest acceptOfferRequest) {
-        String reservationId = UUID.randomUUID().toString();
         Offer offer = this.getCurrentOffer(customerId);
 
-        PaymentDetails paymentDetails = paymentGateway.registerPayment(
-                RegisterPaymentRequest.of(reservationId, acceptOfferRequest, offer.getTotal())
-        );
-        Reservation reservation = Reservation.of(
-                reservationId,
+        Reservation pendingReservation = reservationService.create(Reservation.of(
                 customerId,
                 acceptOfferRequest,
                 offer
+        ));
+
+        PaymentResponse paymentResponse = paymentGateway.registerPayment(
+                PaymentRequest.of(pendingReservation.getId(), acceptOfferRequest, offer)
         );
 
-        reservationRepository.add(reservation);
+        System.out.println(paymentResponse.getOrderId());
 
-        return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl(), offer.getTotal());
-    }
+        reservationService.setPayUOrderId(pendingReservation.getId(), paymentResponse.getOrderId());
 
-    public ReservationDetail acceptOfferPayU(String customerId, AcceptOfferRequest acceptOfferRequest) {
-        String reservationId = UUID.randomUUID().toString();
-        Offer offer = this.getCurrentOffer(customerId);
-
-        PaymentDetails paymentDetails = paymentGateway.registerPayment(
-                OrderCreateRequest.of(reservationId, acceptOfferRequest, offer.getTotal(), offer)
-        );
-        Reservation reservation = Reservation.of(
-                reservationId,
-                customerId,
-                acceptOfferRequest,
-                offer
-        );
-
-        reservationRepository.add(reservation);
-
-        return new ReservationDetail(reservationId, paymentDetails.getPaymentUrl(), offer.getTotal());
+        return new ReservationDetail(
+                pendingReservation.getId(),
+                paymentResponse.getRedirectUri(),
+                offer.getTotal());
     }
 
 

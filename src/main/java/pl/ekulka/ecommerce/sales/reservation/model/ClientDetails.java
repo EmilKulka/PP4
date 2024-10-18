@@ -10,7 +10,7 @@ public class ClientDetails {
     private String firstName;
     private String lastName;
     private String email;
-    @OneToMany(mappedBy = "id")
+    @OneToMany(mappedBy = "customerId")
     private List<Reservation> reservations;
 
     public ClientDetails() {

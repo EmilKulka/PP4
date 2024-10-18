@@ -3,7 +3,6 @@ package pl.ekulka.ecommerce.payu;
 public class PayUCredentials {
     private final String clientId;
     private final String clientSecret;
-
     boolean sandbox;
 
     public PayUCredentials(String clientId, String clientSecret, boolean sandbox) {
@@ -15,9 +14,10 @@ public class PayUCredentials {
     public static PayUCredentials sandbox(String clientId, String clientSecret) {
         return new PayUCredentials(clientId, clientSecret, true);
     }
+
     public String getBaseUrl() {
-        if(sandbox) {
-           return  "https://secure.snd.payu.com";
+        if (sandbox) {
+            return "https://secure.snd.payu.com";
         } else {
             return "https://secure.payu.com";
         }

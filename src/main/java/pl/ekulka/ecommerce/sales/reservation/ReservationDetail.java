@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 
 public class ReservationDetail {
-    private final String reservationId;
+    private final Long reservationId;
     private final String paymentUrl;
     private final BigDecimal total;
 
     @JsonCreator
     public ReservationDetail(
-            @JsonProperty("reservationId") String reservationId,
+            @JsonProperty("reservationId") Long reservationId,
             @JsonProperty("paymentUrl") String paymentUrl,
             @JsonProperty("total") BigDecimal total){
         this.reservationId = reservationId;
@@ -21,7 +21,7 @@ public class ReservationDetail {
     }
 
 
-    public String getReservationId() {
+    public Long getReservationId() {
         return reservationId;
     }
 

@@ -13,7 +13,6 @@ import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
 import java.math.BigDecimal;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 @SpringBootTest
@@ -46,11 +45,11 @@ public class OfferAcceptanceTest {
                 .setLastName("doe")
                 .setEmail("john.doe@example.com");
 
-        ReservationDetail reservationDetails = salesFacade.acceptOfferPayU(customerId, acceptOfferRequest);
+        ReservationDetail reservationDetails = salesFacade.acceptOffer(customerId, acceptOfferRequest);
 
 
         assertThat(reservationDetails.getPaymentUrl()).isNotBlank();
-        assertThat(reservationDetails.getReservationId()).isNotBlank();
+        assertThat(reservationDetails.getReservationId()).isNotNull();
 
 
 
@@ -61,14 +60,14 @@ public class OfferAcceptanceTest {
 
     }
 
-    private void assertReservationTotalMatchOffer(String reservationId, BigDecimal expectedTotal) {
+    private void assertReservationTotalMatchOffer(Long reservationId, BigDecimal expectedTotal) {
         Reservation loaded = reservationService.load(reservationId).get();
 
 
         assertThat(loaded.getTotal()).isEqualTo(expectedTotal);
     }
 
-    private void assertReservationIsDoneForCustomer(String reservationId, String fname, String lname, String email) {
+    private void assertReservationIsDoneForCustomer(Long reservationId, String fname, String lname, String email) {
         Reservation loaded = reservationService.load(reservationId)
                 .get();
 
@@ -80,14 +79,14 @@ public class OfferAcceptanceTest {
 
     }
 
-    private void assertReservationIsPending(String reservationId) {
+    private void assertReservationIsPending(Long reservationId) {
         Reservation loaded = reservationService.load(reservationId)
                 .get();
 
-        assertThat(loaded.isPending()).isTrue();
+        assertThat(loaded.getPaymentStatus()).isEqualTo("PENDING");
     }
 
-    private void assertThereIsReservationWithId(String reservationId) {
+    private void assertThereIsReservationWithId(Long reservationId) {
         Optional<Reservation> loaded = reservationService.load(reservationId);
 
         assertThat(loaded).isPresent();

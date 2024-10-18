@@ -8,23 +8,21 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class    PayuTest {
+public class PayuTest {
 
     @Test
     void creatingNewPayment() {
-        PayU payU = thereIsPayuU();
-        OrderCreateRequest orderCreateRequest = createExampleOrderCreateRequest();
+        PayUApiClient payU = thereIsPayuU();
+        PaymentRequest orderCreateRequest = createExampleOrderCreateRequest();
 
-        OrderCreateResponse response = payU.handle(orderCreateRequest);
+        PaymentResponse response = payU.handlePaymentRequest(orderCreateRequest);
 
         assertNotNull(response.getRedirectUri()); //where to redirect customer
         assertNotNull(response.getOrderId()); //transaction id
-
-
     }
 
-    private OrderCreateRequest createExampleOrderCreateRequest() {
-        var createRequest = new OrderCreateRequest();
+    private PaymentRequest createExampleOrderCreateRequest() {
+        var createRequest = new PaymentRequest();
         createRequest
                 .setNotifyUrl("https://my.example.shop.ekulka.pl/api/order")
                 .setCustomerIp("127.0.0.1")
@@ -53,8 +51,8 @@ public class    PayuTest {
         return createRequest;
     }
 
-    private PayU thereIsPayuU() {
-        return new PayU(
+    private PayUApiClient thereIsPayuU() {
+        return new PayUApiClient(
                 new RestTemplate(),
                 PayUCredentials.sandbox(
                         "300746",

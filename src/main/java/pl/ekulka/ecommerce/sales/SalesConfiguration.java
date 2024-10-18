@@ -5,9 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import pl.ekulka.ecommerce.catalog.service.ProductCatalogServiceImpl;
 import pl.ekulka.ecommerce.infrastructure.PayUGateway;
-import pl.ekulka.ecommerce.payu.PayU;
+import pl.ekulka.ecommerce.payu.PayUApiClient;
 import pl.ekulka.ecommerce.payu.PayUCredentials;
 import pl.ekulka.ecommerce.sales.cart.InMemoryCartStorage;
+import pl.ekulka.ecommerce.sales.offer.EveryNthProductDiscountPolicy;
 import pl.ekulka.ecommerce.sales.offer.OfferCalculator;
 import pl.ekulka.ecommerce.sales.reservation.service.ReservationServiceImpl;
 
@@ -28,13 +29,19 @@ public class SalesConfiguration {
                 new InMemoryCartStorage(),
                 new OfferCalculator(productCatalogService),
                 new PayUGateway(createSandboxPayU()),
-                reservationService
+                reservationService,
+                everyNthProductDiscountPolicy()
         );
     }
 
     @Bean
-    PayU createSandboxPayU() {
-        return new PayU(
+    EveryNthProductDiscountPolicy everyNthProductDiscountPolicy() {
+        return new EveryNthProductDiscountPolicy(5);
+    }
+
+    @Bean
+    PayUApiClient createSandboxPayU() {
+        return new PayUApiClient(
                 new RestTemplate(),
                 PayUCredentials.sandbox(
                         "300746",

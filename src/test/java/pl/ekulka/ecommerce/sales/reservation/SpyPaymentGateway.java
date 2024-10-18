@@ -1,6 +1,7 @@
 package pl.ekulka.ecommerce.sales.reservation;
 
-import pl.ekulka.ecommerce.payu.OrderCreateRequest;
+import pl.ekulka.ecommerce.payu.PaymentRequest;
+import pl.ekulka.ecommerce.payu.PaymentResponse;
 import pl.ekulka.ecommerce.sales.payment.PaymentDetails;
 import pl.ekulka.ecommerce.infrastructure.PaymentGateway;
 import pl.ekulka.ecommerce.sales.payment.RegisterPaymentRequest;
@@ -25,7 +26,7 @@ public class SpyPaymentGateway implements PaymentGateway {
     }
 
     @Override
-    public PaymentDetails registerPayment(OrderCreateRequest registerPaymentRequest) {
+    public PaymentResponse registerPayment(PaymentRequest registerPaymentRequest) {
         return null;
     }
 }
